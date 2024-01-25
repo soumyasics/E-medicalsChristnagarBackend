@@ -20,7 +20,6 @@ const registerUser=(req,res)=>{
     const newUser=new users({
         firstname:req.body.firstname,
         lastname:req.body.lastname,
-
         housename:req.body.housename,
         email:req.body.email,
         city:req.body.city,
@@ -29,6 +28,7 @@ const registerUser=(req,res)=>{
         district:req.body.district,
         password:req.body.password,
         dob:req.body.dob,
+        gender:req.body.gender,
         image:req.file
     })
     newUser.save().then(data=>{
