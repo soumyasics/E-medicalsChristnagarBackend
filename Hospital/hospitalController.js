@@ -1,4 +1,4 @@
-const users=require('./userSchema')
+const Hospitals=require('./hospitalSchema')
 const multer=require('multer')
 
 
@@ -12,26 +12,23 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage }).single("image");
-//User Registration 
+//Hospital Registration 
 
-const registerUser=(req,res)=>{
+const registerHospital=(req,res)=>{
 
 
-    const newUser=new users({
-        firstname:req.body.firstname,
-        lastname:req.body.lastname,
-        housename:req.body.housename,
+    const newHospital=new Hospitals({
+        name:req.body.name,
         email:req.body.email,
         city:req.body.city,
         pincode:req.body.pincode,
         contact:req.body.contact,
         district:req.body.district,
         password:req.body.password,
-        dob:req.body.dob,
-        gender:req.body.gender,
+        regno:req.body.regno,
         image:req.file
     })
-    newUser.save().then(data=>{
+    newHospital.save().then(data=>{
         res.json({
             status:200,
             msg:"Inserted successfully",
@@ -46,14 +43,14 @@ const registerUser=(req,res)=>{
         })
     })
 }
-//User Registration -- finished
+//Hospital Registration -- finished
 
-//Login User 
-const loginUser=(req,res)=>{
+//Login Hospital 
+const loginHospital=(req,res)=>{
     const email=req.body.email
     const password=req.body.password
   
-    users.findOne({email:email}).exec().then(data=>{
+    Hospitals.findOne({email:email}).exec().then(data=>{
       if(password==data.password){
         res.json({
           status:200,
@@ -71,20 +68,20 @@ const loginUser=(req,res)=>{
   }).catch(err=>{
   res.json({
       status:500,
-      msg:"User not found",
+      msg:"Hospital not found",
       Error:err
   })
   })
     };
   
   
-  //Login User --finished
+  //Login Hospital --finished
   
   
-  //View all Users
+  //View all Hospitals
   
-  const viewUsers=(req,res)=>{
-    users.find().exec()
+  const viewHospitals=(req,res)=>{
+    Hospitals.find().exec()
     .then(data=>{
       if(data.length>0){
       res.json({
@@ -108,25 +105,23 @@ const loginUser=(req,res)=>{
   
   }
   
-  // view Users finished
+  // view Hospitals finished
   
   
-  //update User by id
-  const editUserById=(req,res)=>{
+  //update Hospital by id
+  const editHospitalById=(req,res)=>{
   
     
       
-    users.findByIdAndUpdate({_id:req.params.id},{
-        firstname:req.body.firstname,
-        lastname:req.body.lastname,
-
-        housename:req.body.housename,
+    Hospitals.findByIdAndUpdate({_id:req.params.id},{
+        name:req.body.tname,
         email:req.body.email,
         city:req.body.city,
         pincode:req.body.pincode,
         contact:req.body.contact,
         district:req.body.district,
-        dob:req.body.dob
+        regno:req.body.regno,
+        image:req.file
       })
   .exec().then(data=>{
     res.json({
@@ -142,8 +137,8 @@ const loginUser=(req,res)=>{
   })
   }
 // view cust by id
-  const viewUserById=(req,res)=>{
-    users.findOne({_id:req.params.id}).exec()
+  const viewHospitalById=(req,res)=>{
+    Hospitals.findOne({_id:req.params.id}).exec()
     .then(data=>{
       console.log(data);
       res.json({
@@ -163,9 +158,9 @@ const loginUser=(req,res)=>{
   
   }
   
-  const deleteUserById=(req,res)=>{
+  const deleteHospitalById=(req,res)=>{
 
-    users.findByIdAndDelete({_id:req.params.id}).exec()
+    Hospitals.findByIdAndDelete({_id:req.params.id}).exec()
     .then(data=>{
       console.log(data);
       res.json({
@@ -184,12 +179,12 @@ const loginUser=(req,res)=>{
   })
   
   }
-  //forgotvPawd User by id
+  //forgotvPawd Hospital by id
   const forgotPwd=(req,res)=>{
   
     
       
-    users.findOneAndUpdate({email:req.body.email},{
+    Hospitals.findOneAndUpdate({email:req.body.email},{
      
       password:req.body.password
       })
@@ -202,7 +197,7 @@ const loginUser=(req,res)=>{
     else
     res.json({
       status:500,
-      msg:"User Not Found"
+      msg:"Hospital Not Found"
      
   })
   }).catch(err=>{
@@ -219,12 +214,12 @@ const loginUser=(req,res)=>{
 
 
 module.exports={
-  registerUser,
-  viewUsers,
-  editUserById,
-  loginUser,
+  registerHospital,
+  viewHospitals,
+  editHospitalById,
+  loginHospital,
   forgotPwd,
-  viewUserById,
-  deleteUserById,
+  viewHospitalById,
+  deleteHospitalById,
   upload
 }

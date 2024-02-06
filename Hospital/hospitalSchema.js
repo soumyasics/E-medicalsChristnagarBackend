@@ -1,26 +1,17 @@
 const mongoose= require("mongoose");
 
-const userSchema=mongoose.Schema({
-    firstname:{
+const hSchema=mongoose.Schema({
+    
+    name:{
         type:String,
         required:true
     },
-    housename:{
-        type:String,
-        required:true
-    },
-    dob:{
-        type:Date,
-        required:true
-    },
+    
     contact:{
         type:Number,
         required:true
     },
-    lastname:{
-        type:String,
-        required:true
-    },
+    
     district:{
         type:String,
         required:true
@@ -46,10 +37,13 @@ const userSchema=mongoose.Schema({
     },image:{
         type:Object
     },
-    gender:{
+    regno:{
         type:String,
-        required:true
+        unique:true,
+        required:true,
+       
+        dropDups: true
     }
 });
-module.exports=mongoose.model('users',userSchema)
+module.exports=mongoose.model('hospitals',hSchema)
 
