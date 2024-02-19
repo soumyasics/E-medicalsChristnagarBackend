@@ -34,18 +34,18 @@ router.post('/viewTestByLabId/:id',test.viewTestByLabId)
 
 
 //booking
-router.post('/addBooking',booking.addBooking)
+router.post('/addBooking',booking.addBooking)//done
 router.post('/viewBookingById/:id',booking.viewBookingById)
-router.post('/viewBookings',booking.viewBookings)
+router.post('/viewBookings',booking.viewBookings)//done
 router.post('/viewBookingByUserId/:id',booking.viewBookingByUserId)
-router.post('/deleteBookingById/:id',booking.deleteBookingById)
-router.post('/rejectBookingById/:id',booking.rejectBookingById)
+router.post('/deleteBookingById/:id',booking.deleteBookingById)//done
+router.post('/rejectBookingById/:id',booking.rejectBookingById)//done
+router.post('/viewPendingBookingsByUserId/:id',booking.viewPendingBookingsByUserId)//done
 router.post('/viewPendingBookingsByUserId/:id',booking.viewPendingBookingsByUserId)
-router.post('/viewPendingBookingsByUserId/:id',booking.viewPendingBookingsByUserId)
-router.post('/viewApprovedBookingsByUserId/:id',booking.viewApprovedBookingsByUserId)
+router.post('/viewApprovedBookingsByUserId/:id',booking.viewApprovedBookingsByUserId)//done
 
-router.post('/viewApprovedBookings',booking.viewApprovedBookings)
-router.post('/approveBookingById/:id',booking.approveBookingById)
+router.post('/viewApprovedBookings',booking.viewApprovedBookings)//done
+router.post('/approveBookingById/:id',booking.approveBookingById)//done
 
 
 module.exports=router
