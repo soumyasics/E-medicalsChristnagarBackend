@@ -33,7 +33,7 @@ const addBooking = (req, res) => {
 
 const viewBookings = (req, res) => {
 
-    booking.find().populate('userid').populate('testid').exec()
+    booking.find({approvedByLab:'Pending'}).populate('userid').populate('testid').exec()
         .then(data => {
             emps = data
             if (data.length > 0) {
