@@ -4,8 +4,7 @@ const router=express.Router()
 const userController=require('./User/userController')
 const HospitalController=require('./Hospital/hospitalController')
 const test=require('./Lab/LabTests/testController')
-
-
+const booking=require('./Lab/Booking/bookingController')
 //user routes
 router.post('/registerUser',userController.upload,userController.registerUser)//done
 router.post('/loginUser',userController.loginUser)//done
@@ -32,6 +31,21 @@ router.post('/viewTestById/:id',test.viewTestById)//done
 router.post('/editTestById/:id',test.ediTestById)//done
 router.post('/viewAllTests',test.viewTests)//done
 router.post('/viewTestByLabId/:id',test.viewTestByLabId)
+
+
+//booking
+router.post('/addBooking',booking.addBooking)
+router.post('/viewBookingById/:id',booking.viewBookingById)
+router.post('/viewBookings',booking.viewBookings)
+router.post('/viewBookingByUserId/:id',booking.viewBookingByUserId)
+router.post('/deleteBookingById/:id',booking.deleteBookingById)
+router.post('/rejectBookingById/:id',booking.rejectBookingById)
+router.post('/viewPendingBookingsByUserId/:id',booking.viewPendingBookingsByUserId)
+router.post('/viewPendingBookingsByUserId/:id',booking.viewPendingBookingsByUserId)
+router.post('/viewApprovedBookingsByUserId/:id',booking.viewApprovedBookingsByUserId)
+
+router.post('/viewApprovedBookings',booking.viewApprovedBookings)
+router.post('/approveBookingById/:id',booking.approveBookingById)
 
 
 module.exports=router
