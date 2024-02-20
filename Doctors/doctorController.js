@@ -29,6 +29,7 @@ const addDoctor=(req,res)=>{
         qualification:req.body.qualification,
         experience:req.body.experience,
         affiliationnumber:req.body.affiliationnumber,
+        hospitalid:req.params.id,
         image:req.file
     })
     newDoctor.save().then(data=>{
@@ -72,7 +73,7 @@ const loginDoctor=(req,res)=>{
   else{
     res.json({
       status:401,
-      msg:"password Mismatch",
+      msg:"No User Found",
       
   })
   }
@@ -117,23 +118,25 @@ const loginDoctor=(req,res)=>{
   
   }
   
-  // view Hospitals finished
+  // view  finished
   
   
-  //update Hospital by id
-  const editHospitalById=(req,res)=>{
+  //update  by id
+  const editDoctorById=(req,res)=>{
   
     
       
-    Hospitals.findByIdAndUpdate({_id:req.params.id},{
-        name:req.body.tname,
-        email:req.body.email,
-        city:req.body.city,
-        pincode:req.body.pincode,
-        contact:req.body.contact,
-        district:req.body.district,
-        regno:req.body.regno,
-        image:req.file
+    doctors.findByIdAndUpdate({_id:req.params.id},{
+      name:req.body.name,
+      email:req.body.email,
+      city:req.body.city,
+      pincode:req.body.pincode,
+      contact:req.body.contact,
+      district:req.body.district,
+      specialization:req.body.specialization,
+      qualification:req.body.qualification,
+      experience:req.body.experience,
+      image:req.file
       })
   .exec().then(data=>{
     res.json({
@@ -149,7 +152,7 @@ const loginDoctor=(req,res)=>{
   })
   }
 // view cust by id
-  const viewHospitalById=(req,res)=>{
+  const viewDoctorById=(req,res)=>{
     Hospitals.findOne({_id:req.params.id}).exec()
     .then(data=>{
       console.log(data);
@@ -170,9 +173,9 @@ const loginDoctor=(req,res)=>{
   
   }
   
-  const deleteHospitalById=(req,res)=>{
+  const deleteDoctorById=(req,res)=>{
 
-    Hospitals.findByIdAndDelete({_id:req.params.id}).exec()
+    doctors.findByIdAndDelete({_id:req.params.id}).exec()
     .then(data=>{
       console.log(data);
       res.json({
@@ -191,12 +194,12 @@ const loginDoctor=(req,res)=>{
   })
   
   }
-  //forgotvPawd Hospital by id
+  //forgotvPawd  by id
   const forgotPwd=(req,res)=>{
   
     
       
-    Hospitals.findOneAndUpdate({email:req.body.email},{
+    doctors.findOneAndUpdate({email:req.body.email},{
      
       password:req.body.password
       })
@@ -226,12 +229,12 @@ const loginDoctor=(req,res)=>{
 
 
 module.exports={
-  registerHospital,
-  viewHospitals,
-  editHospitalById,
-  loginHospital,
+  addDoctor,
+  viewDoctors,
+  editDoctorById,
+  loginDoctor,
   forgotPwd,
-  viewHospitalById,
-  deleteHospitalById,
+  viewDoctorById,
+  deleteDoctorById,
   upload
 }
