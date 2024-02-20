@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage }).single("image");
-//Hospital Registration 
+// Registration 
 
 const addDoctor=(req,res)=>{
 
@@ -54,7 +54,7 @@ const loginDoctor=(req,res)=>{
     const email=req.body.email
     const password=req.body.password
   
-    Hospitals.findOne({email:email}).exec().then(data=>{
+    doctors.findOne({email:email}).exec().then(data=>{
       if(data.length>0){
       if(password==data.password){
         res.json({
@@ -118,6 +118,34 @@ const loginDoctor=(req,res)=>{
   
   }
   
+
+  const viewDoctorsByHospitalId=(req,res)=>{
+    doctors.find({hospitalid:req.params.id}).exec()
+    .then(data=>{
+      if(data.length>0){
+      res.json({
+          status:200,
+          msg:"Data obtained successfully",
+          data:data
+      })
+    }else{
+      res.json({
+        status:200,
+        msg:"No Data obtained "
+    })
+    }
+  }).catch(err=>{
+      res.json({
+          status:500,
+          msg:"Data not Inserted",
+          Error:err
+      })
+  })
+  
+  }
+  
+
+
   // view  finished
   
   
@@ -153,7 +181,7 @@ const loginDoctor=(req,res)=>{
   }
 // view cust by id
   const viewDoctorById=(req,res)=>{
-    Hospitals.findOne({_id:req.params.id}).exec()
+    doctors.findOne({_id:req.params.id}).exec()
     .then(data=>{
       console.log(data);
       res.json({
@@ -212,7 +240,7 @@ const loginDoctor=(req,res)=>{
     else
     res.json({
       status:500,
-      msg:"Hospital Not Found"
+      msg:"doctors Not Found"
      
   })
   }).catch(err=>{
@@ -236,5 +264,6 @@ module.exports={
   forgotPwd,
   viewDoctorById,
   deleteDoctorById,
-  upload
+  upload,
+  viewDoctorsByHospitalId
 }
