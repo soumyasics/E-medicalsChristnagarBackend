@@ -50,7 +50,7 @@ router.post('/approveBookingById/:id',booking.approveBookingById)//done
 
 
 //results
-router.post('/addResult',result.addResult)
+router.post('/addResult',result.addResult)//done
 router.post('/viewResultByBookingId/:id',result.viewResultByBookingId)
 router.post('/viewResultById/:id',result.viewResultById)
 router.post('/viewResultByUserId/:id',result.viewResultByUserId)
