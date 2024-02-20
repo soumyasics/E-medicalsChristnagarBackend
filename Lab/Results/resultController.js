@@ -44,6 +44,7 @@ const addResult = async (req, res) => {
         if (details[i].minrange > result[i].value || details[i].maxrange < result[i].value) {
             console.log("deviation");
             deviation = 1
+            result[i].deviation=1
             comment = "Please consult a doctor as you have some variations with your reports."
         }
     }
@@ -126,7 +127,7 @@ const viewResultByBookingId = (req, res) => {
 
         populate('testid')
 
-    exec().then(data => {
+    .exec().then(data => {
         res.json({
             status: 200,
             data: data
@@ -158,15 +159,6 @@ const viewResultByUserId = async (req, res) => {
 
 
 }
-
-
-
-
-
-
-
-
-
 
 
 module.exports = {
