@@ -17,7 +17,7 @@ router.post('/deleteUserById/:id',userController.deleteUserById)
 router.post('/forgotPwdUser',userController.forgotPwd)//done
 
 
-//user routes
+//hospital routes
 router.post('/registerHospital',HospitalController.upload,HospitalController.registerHospital)//done
 router.post('/loginHospital',HospitalController.loginHospital)//done
 router.post('/viewHospitalById/:id',HospitalController.viewHospitalById)//done
@@ -51,7 +51,7 @@ router.post('/approveBookingById/:id',booking.approveBookingById)//done
 
 //results
 router.post('/addResult',result.addResult)//done
-router.post('/viewResultByBookingId/:id',result.viewResultByBookingId)
+router.post('/viewResultByBookingId/:id',result.viewResultByBookingId)//done
 router.post('/viewResultById/:id',result.viewResultById)
 router.post('/viewResultByUserId/:id',result.viewResultByUserId)
 
