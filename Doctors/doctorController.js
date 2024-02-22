@@ -33,7 +33,7 @@ const addDoctor=(req,res)=>{
         image:req.file,
         fromtime:req.body.fromtime,
       totime:req.body.totime,
-      days:req.body.days,
+      days:req.body.availabledays,
     })
     newDoctor.save().then(data=>{
         res.json({
