@@ -288,12 +288,18 @@ const checkDay=(req,res)=>{
   doctors.findById({_id:req.params.id}).exec()
   .then(data=>{
 console.log(data.days);
-
+if(data.days.includes(req.body.day)){
 res.json({
         status:200,
-        msg:"Data obtained successfully",
-        data:data.days
+        msg:"date available"
     })
+  }
+    else{
+      res.json({
+        status:401,
+        msg:"date not available"
+    })
+    }
   
 }).catch(err=>{
   console.log(err);
