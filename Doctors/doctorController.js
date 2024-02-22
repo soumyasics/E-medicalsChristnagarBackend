@@ -308,7 +308,7 @@ const checkDay=(req,res)=>{
   doctors.findById({_id:req.params.id}).exec()
   .then(data=>{
 console.log(data.days);
-if(data.days.includes(req.body.day)){
+if(data.days.includes(requestedDayOfWeek)){
 res.json({
         status:200,
         msg:"date available"
