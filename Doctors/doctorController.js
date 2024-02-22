@@ -30,7 +30,10 @@ const addDoctor=(req,res)=>{
         experience:req.body.experience,
         affiliationnumber:req.body.affiliationnumber,
         hospitalid:req.params.id,
-        image:req.file
+        image:req.file,
+        fromtime:req.body.fromtime,
+      totime:req.body.totime,
+      days:req.body.days,
     })
     newDoctor.save().then(data=>{
         res.json({
@@ -164,6 +167,10 @@ const loginDoctor=(req,res)=>{
       specialization:req.body.specialization,
       qualification:req.body.qualification,
       experience:req.body.experience,
+      fromtime:req.body.fromtime,
+      totime:req.body.totime,
+      days:req.body.days,
+
       image:req.file
       })
   .exec().then(data=>{
@@ -179,9 +186,9 @@ const loginDoctor=(req,res)=>{
     })
   })
   }
-// view cust by id
+// view  by id
   const viewDoctorById=(req,res)=>{
-    doctors.findOne({_id:req.params.id}).exec()
+    doctors.findById({_id:req.params.id}).exec()
     .then(data=>{
       console.log(data);
       res.json({
@@ -253,6 +260,57 @@ const loginDoctor=(req,res)=>{
   })
   }
   
+// view doctors by specialization
+
+const viewDoctorBySpecialization=(req,res)=>{
+  doctors.find({specialization:req.params.specialization}).exec()
+  .then(data=>{
+    console.log(data);
+    res.json({
+        status:200,
+        msg:"Data obtained successfully",
+        data:data
+    })
+  
+}).catch(err=>{
+  console.log(err);
+    res.json({
+        status:500,
+        msg:"No Data obtained",
+        Error:err
+    })
+})
+
+}
+
+
+const checkDay=(req,res)=>{
+  doctors.findById({_id:req.params.id}).exec()
+  .then(data=>{
+console.log(data.days);
+if(data.days.includes(req.body.day)){
+res.json({
+        status:200,
+        msg:"date available"
+    })
+  }
+    else{
+      res.json({
+        status:401,
+        msg:"date not available"
+    })
+    }
+  
+}).catch(err=>{
+  console.log(err);
+    res.json({
+        status:500,
+        msg:"No Data obtained",
+        Error:err
+    })
+})
+
+}
 
 
 
@@ -265,5 +323,7 @@ module.exports={
   viewDoctorById,
   deleteDoctorById,
   upload,
-  viewDoctorsByHospitalId
+  viewDoctorsByHospitalId,
+  viewDoctorBySpecialization,
+  checkDay
 }

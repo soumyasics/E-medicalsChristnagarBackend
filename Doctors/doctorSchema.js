@@ -65,6 +65,18 @@ const doctorSchema=mongoose.Schema({
     rating: {
         type: Number,
         default: 0
+    },
+    fromtime: {
+        type: String,
+        required: true
+    },
+    totime: {
+        type: String,
+        required: true
+    },
+    days: {
+        type: Array,
+        required: true
     }
 });
 module.exports=mongoose.model('doctors',doctorSchema)
