@@ -30,7 +30,10 @@ const addDoctor=(req,res)=>{
         experience:req.body.experience,
         affiliationnumber:req.body.affiliationnumber,
         hospitalid:req.params.id,
-        image:req.file
+        image:req.file,
+        fromtime:req.body.fromtime,
+      totime:req.body.totime,
+      days:req.body.days,
     })
     newDoctor.save().then(data=>{
         res.json({
@@ -281,6 +284,29 @@ const viewDoctorBySpecialization=(req,res)=>{
 }
 
 
+const checkDay=(req,res)=>{
+  doctors.findById({_id:req.params.id}).exec()
+  .then(data=>{
+console.log(data.days);
+
+res.json({
+        status:200,
+        msg:"Data obtained successfully",
+        data:data.days
+    })
+  
+}).catch(err=>{
+  console.log(err);
+    res.json({
+        status:500,
+        msg:"No Data obtained",
+        Error:err
+    })
+})
+
+}
+
+
 
 module.exports={
   addDoctor,
@@ -291,5 +317,7 @@ module.exports={
   viewDoctorById,
   deleteDoctorById,
   upload,
-  viewDoctorsByHospitalId
+  viewDoctorsByHospitalId,
+  viewDoctorBySpecialization,
+  checkDay
 }
