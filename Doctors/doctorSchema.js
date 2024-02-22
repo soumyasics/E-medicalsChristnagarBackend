@@ -6,6 +6,11 @@ const doctorSchema=mongoose.Schema({
         type:String,
         required:true
     },
+    hospitalid:{
+        type:mongoose.Schema.Types.ObjectId,
+        required:true,
+        ref:'hospitals'
+    },
     
     contact:{
         type:Number,

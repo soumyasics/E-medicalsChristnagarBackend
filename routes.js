@@ -6,6 +6,7 @@ const HospitalController=require('./Hospital/hospitalController')
 const test=require('./Lab/LabTests/testController')
 const booking=require('./Lab/Booking/bookingController')
 const result=require('./Lab/Results/resultController')
+const doctor=require('./Doctors/doctorController')
 
 //user routes
 router.post('/registerUser',userController.upload,userController.registerUser)//done
@@ -25,6 +26,17 @@ router.post('/viewHospitals',HospitalController.viewHospitals)
 router.post('/editHospitalById/:id',HospitalController.upload,HospitalController.editHospitalById)//done
 router.post('/deleteHospitalById/:id',HospitalController.deleteHospitalById)
 router.post('/forgotPwdHospital',HospitalController.forgotPwd)//done
+
+
+//Doctor routes
+router.post('/addDoctor/:id',doctor.upload,doctor.addDoctor)
+router.post('/loginDoctor',doctor.loginDoctor)
+router.post('/viewDoctorById/:id',doctor.viewDoctorById)
+router.post('/viewDoctors',doctor.viewDoctors)
+router.post('/editDoctorById/:id',doctor.upload,doctor.editDoctorById)
+router.post('/deleteDoctorById/:id',doctor.deleteDoctorById)
+router.post('/forgotPwdDoctor',doctor.forgotPwd)
+router.post('/viewDoctorsByHospitalId/:id',doctor.viewDoctorsByHospitalId)
 
 //test
 router.post('/addTest',test.addTest)//done
