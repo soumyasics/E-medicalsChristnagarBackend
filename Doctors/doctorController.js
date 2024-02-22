@@ -179,6 +179,13 @@ const loginDoctor=(req,res)=>{
         msg:"Updated successfully"
     })
   }).catch(err=>{
+    if(err.Error.code==11000){
+      return res.json({
+         status:409,
+         msg:"Mail Id already in Use",
+         Error:err
+     })
+     }
     res.json({
         status:500,
         msg:"Data not Updated",
@@ -285,6 +292,13 @@ const viewDoctorBySpecialization=(req,res)=>{
 
 
 const checkDay=(req,res)=>{
+  const requestedDate = req.body.date; // Assuming date is received from frontend in 'YYYY-MM-DD' format
+
+  // Parse the date to get year, month, and day
+  const [year, month, day] = requestedDate.split('-');
+  const dateObject = new Date(year, month - 1, day);
+  const dayOfWeek = dateObject.getDay();
+  console.log(dayOfWeek);
   doctors.findById({_id:req.params.id}).exec()
   .then(data=>{
 console.log(data.days);
