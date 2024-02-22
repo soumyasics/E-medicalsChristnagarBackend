@@ -42,7 +42,14 @@ const addDoctor=(req,res)=>{
             data:data
         })
     }).catch(err=>{
-   
+      console.log(err);
+      if(err.code==11000){
+        return res.json({
+           status:409,
+           msg:"Mail Id already in Use",
+           Error:err
+       })
+       }
         res.json({
             status:500,
             msg:"Data not Inserted",
@@ -179,13 +186,7 @@ const loginDoctor=(req,res)=>{
         msg:"Updated successfully"
     })
   }).catch(err=>{
-    if(err.Error.code==11000){
-      return res.json({
-         status:409,
-         msg:"Mail Id already in Use",
-         Error:err
-     })
-     }
+    
     res.json({
         status:500,
         msg:"Data not Updated",
