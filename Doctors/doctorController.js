@@ -42,7 +42,6 @@ const addDoctor=(req,res)=>{
             data:data
         })
     }).catch(err=>{
-      console.log(err);
       if(err.code==11000){
         return res.json({
            status:409,
@@ -293,17 +292,23 @@ const viewDoctorBySpecialization=(req,res)=>{
 
 
 const checkDay=(req,res)=>{
-  const requestedDate = req.body.date; // Assuming date is received from frontend in 'YYYY-MM-DD' format
+  const requestedDate = req.body.date;
 
-  // Parse the date to get year, month, and day
-  const [year, month, day] = requestedDate.split('-');
+
+  const [year, month, day] = requestedDate.slice(0,11).split('-');
   const dateObject = new Date(year, month - 1, day);
   const dayOfWeek = dateObject.getDay();
   console.log(dayOfWeek);
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    // Get the name of the day from the array using the day of the week index
+    const requestedDayOfWeek = daysOfWeek[dayOfWeek];
+    console.log(requestedDayOfWeek);
+
   doctors.findById({_id:req.params.id}).exec()
   .then(data=>{
 console.log(data.days);
-if(data.days.includes(req.body.day)){
+if(data.days.includes(requestedDayOfWeek)){
 res.json({
         status:200,
         msg:"date available"
