@@ -29,14 +29,14 @@ router.post('/forgotPwdHospital',HospitalController.forgotPwd)//done
 
 
 //Doctor routes
-router.post('/addDoctor/:id',doctor.upload,doctor.addDoctor)
+router.post('/addDoctor/:id',doctor.upload,doctor.addDoctor)//done
 router.post('/loginDoctor',doctor.loginDoctor)
-router.post('/viewDoctorById/:id',doctor.viewDoctorById)
+router.post('/viewDoctorById/:id',doctor.viewDoctorById)//done
 router.post('/viewDoctors',doctor.viewDoctors)
-router.post('/editDoctorById/:id',doctor.upload,doctor.editDoctorById)
-router.post('/deleteDoctorById/:id',doctor.deleteDoctorById)
+router.post('/editDoctorById/:id',doctor.upload,doctor.editDoctorById)//done
+router.post('/deleteDoctorById/:id',doctor.deleteDoctorById)//done
 router.post('/forgotPwdDoctor',doctor.forgotPwd)
-router.post('/viewDoctorsByHospitalId/:id',doctor.viewDoctorsByHospitalId)
+router.post('/viewDoctorsByHospitalId/:id',doctor.viewDoctorsByHospitalId)//done
 router.post('/viewDoctorBySpecialization/:id',doctor.viewDoctorBySpecialization)
 router.post('/checkDay/:id',doctor.checkDay)
 
