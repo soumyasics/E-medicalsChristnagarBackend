@@ -270,7 +270,7 @@ const loginDoctor=(req,res)=>{
 // view doctors by specialization
 
 const viewDoctorBySpecialization=(req,res)=>{
-  doctors.find({specialization:req.params.specialization}).exec()
+  doctors.find({specialization:req.body.specialization}).exec()
   .then(data=>{
     console.log(data);
     res.json({

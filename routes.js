@@ -37,7 +37,7 @@ router.post('/editDoctorById/:id',doctor.upload,doctor.editDoctorById)//done
 router.post('/deleteDoctorById/:id',doctor.deleteDoctorById)//done
 router.post('/forgotPwdDoctor',doctor.forgotPwd)
 router.post('/viewDoctorsByHospitalId/:id',doctor.viewDoctorsByHospitalId)//done
-router.post('/viewDoctorBySpecialization/:id',doctor.viewDoctorBySpecialization)
+router.post('/viewDoctorBySpecialization',doctor.viewDoctorBySpecialization)//done
 router.post('/checkDay/:id',doctor.checkDay)
 
 
