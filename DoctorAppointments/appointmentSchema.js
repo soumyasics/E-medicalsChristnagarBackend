@@ -23,4 +23,4 @@ const appointmentSchema=mongoose.Schema({
     }
 
 });
-module.exports=mongoose.model('doctorappointmentss',appointmentSchema)
+module.exports=mongoose.model('doctorappointments',appointmentSchema)
