@@ -85,5 +85,6 @@ const viewmedicines=(req,res)=>{
 
 module.exports={
     addMedicine,
-    viewmedicines
+    viewmedicines,
+    upload
 }
