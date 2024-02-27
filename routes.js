@@ -7,6 +7,7 @@ const test=require('./Lab/LabTests/testController')
 const booking=require('./Lab/Booking/bookingController')
 const result=require('./Lab/Results/resultController')
 const doctor=require('./Doctors/doctorController')
+const medicines=require('./Pharmacy/pharmacyController')
 
 //user routes
 router.post('/registerUser',userController.upload,userController.registerUser)//done
@@ -70,5 +71,8 @@ router.post('/viewResultByBookingId/:id',result.viewResultByBookingId)//done
 router.post('/viewResultById/:id',result.viewResultById)
 router.post('/viewResultByUserId/:id',result.viewResultByUserId)
 
+//Pharmacy
+router.post('/addMedicine',medicines.upload,medicines.addMedicine)
+router.post('/viewmedicines',medicines.viewmedicines)
 
 module.exports=router
