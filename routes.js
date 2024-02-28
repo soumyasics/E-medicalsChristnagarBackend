@@ -78,7 +78,7 @@ router.post('/viewmedicines',medicines.viewmedicines)
 
 //DR appointments
 router.post('/addAppointment',appointments.addAppointment)
-
-//view appon by userid, view appoint for dr on today
+router.post('/viewAppointmentByUserId/:userid',appointments.viewAppointmentByUserId)
+router.post('/viewTodaysAppointmentForDr/:doctorid',appointments.viewTodaysAppointmentForDr)
 
 module.exports=router

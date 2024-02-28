@@ -33,4 +33,65 @@ await doctorSchema.findById({_id:req.body.doctorid}).exec().then(data=>{
 }
 // appointment -- finished
 
-module.exports={addAppointment}
+//view appointment by userid
+const viewAppointmentByUserId=(req,res)=>{
+    appointmentSchema.find({userid:req.params.userid})
+    .populate('hospitalid')
+    .populate('doctorid')
+    .exec()
+    .then(data=>{
+      if(data.length>0){
+      res.json({
+          status:200,
+          msg:"Data obtained successfully",
+          data:data
+      })
+    }else{
+      res.json({
+        status:200,
+        msg:"No Data obtained "
+    })
+    }
+  }).catch(err=>{
+      res.json({
+          status:500,
+          msg:"Data not Inserted",
+          Error:err
+      })
+  })
+  
+  }
+  
+
+  //view Today's Appointment For Dr
+const viewTodaysAppointmentForDr=(req,res)=>{
+    let today=new Date()
+    appointmentSchema.find({doctorid:req.params.doctorid,date:today})
+    .populate('userid')
+    
+    .exec()
+    .then(data=>{
+      if(data.length>0){
+      res.json({
+          status:200,
+          msg:"Data obtained successfully",
+          data:data
+      })
+    }else{
+      res.json({
+        status:200,
+        msg:"No Data obtained "
+    })
+    }
+  }).catch(err=>{
+      res.json({
+          status:500,
+          msg:"Data not Inserted",
+          Error:err
+      })
+  })
+  
+  }
+module.exports={addAppointment,
+viewAppointmentByUserId,
+viewTodaysAppointmentForDr}
