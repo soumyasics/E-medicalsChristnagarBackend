@@ -63,35 +63,43 @@ const viewAppointmentByUserId=(req,res)=>{
   }
   
 
-  //view Today's Appointment For Dr
-const viewTodaysAppointmentForDr=(req,res)=>{
-    let today=new Date()
-    appointmentSchema.find({doctorid:req.params.doctorid,date:today})
-    .populate('userid')
-    
-    .exec()
-    .then(data=>{
-      if(data.length>0){
-      res.json({
-          status:200,
-          msg:"Data obtained successfully",
-          data:data
-      })
-    }else{
-      res.json({
-        status:200,
-        msg:"No Data obtained "
-    })
-    }
-  }).catch(err=>{
-      res.json({
-          status:500,
-          msg:"Data not Inserted",
-          Error:err
-      })
-  })
-  
-  }
+  const viewTodaysAppointmentForDr = (req, res) => {
+    let today = new Date();
+    let startOfDay = new Date(today);
+    startOfDay.setHours(0, 0, 0, 0); // Set time to the beginning of the day
+
+    let endOfDay = new Date(today);
+    endOfDay.setHours(23, 59, 59, 999); // Set time to the end of the day
+
+    appointmentSchema.find({
+            doctorid: req.params.doctorid,
+            date: { $gte: startOfDay, $lt: endOfDay }
+        })
+        .populate('userid')
+        .exec()
+        .then(data => {
+            if (data.length > 0) {
+                res.json({
+                    status: 200,
+                    msg: "Data obtained successfully",
+                    data: data
+                })
+            } else {
+                res.json({
+                    status: 200,
+                    msg: "No appointments for today"
+                })
+            }
+        }).catch(err => {
+            console.log(err);
+            res.json({
+                status: 500,
+                msg: "Error occurred while fetching data",
+                Error: err
+            })
+        })
+}
+
 module.exports={addAppointment,
 viewAppointmentByUserId,
 viewTodaysAppointmentForDr}
