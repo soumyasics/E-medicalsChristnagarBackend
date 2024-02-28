@@ -2,9 +2,9 @@
 const doctorSchema = require('../Doctors/doctorSchema')
 const appointmentSchema=require('./appointmentSchema')
 
-const addAppointment=(req,res)=>{
-    const hospitalid=null
-doctorSchema.findById({_id:req.body.doctorid}).exec().then(data=>{
+const addAppointment=async(req,res)=>{
+    let hospitalid=null
+await doctorSchema.findById({_id:req.body.doctorid}).exec().then(data=>{
      hospitalid=data.hospitalid
 }).catch(err=>{
     console.log("err",err);
@@ -16,14 +16,14 @@ doctorSchema.findById({_id:req.body.doctorid}).exec().then(data=>{
         doctorid:req.body.doctorid,
         date:req.body.day
     })
-    newDoctor.save().then(data=>{
+    await newAppointment.save().then(data=>{
         res.json({
             status:200,
             msg:"Inserted successfully",
             data:data
         })
     }).catch(err=>{
-   
+   console.log(err);
         res.json({
             status:500,
             msg:"Data not Inserted",
