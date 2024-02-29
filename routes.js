@@ -73,10 +73,10 @@ router.post('/viewResultById/:id',result.viewResultById)
 router.post('/viewResultByUserId/:id',result.viewResultByUserId)
 
 //Pharmacy
-router.post('/addMedicine',medicines.upload,medicines.addMedicine)
+router.post('/addMedicine',medicines.upload,medicines.addMedicine)//done
 router.post('/viewmedicines',medicines.viewmedicines)
 
 //DR appointments
-router.post('/addAppointment',appointments.addAppointment)
+router.post('/addAppointment',appointments.addAppointment)//done
 
 module.exports=router

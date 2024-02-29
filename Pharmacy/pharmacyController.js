@@ -25,7 +25,7 @@ let flag=0
         }
     }).catch(err=>{
         console.log("err",err);
-    })
+    }) 
 
     const newMed=new medicines({
         name:req.body.name,
