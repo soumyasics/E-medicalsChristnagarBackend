@@ -23,7 +23,9 @@ const hSchema = mongoose.Schema({
     comments: {
         type: String,
     },
-    img:Object,
+    image:{
+        type:Object
+    },
     count:{
         type:Number,
         required:true
