@@ -18,6 +18,7 @@ const addMedicine=async(req,res)=>{
 let flag=0
     await medicines.find({name:req.body.name,dosage:req.body.dosage}).exec().then(data=>{
         if(data.length>0){
+            flag=1
             return res.json({
                 status:409,
                 msg:"Medicine Already Added With Us !!!"
@@ -25,7 +26,7 @@ let flag=0
         }
     }).catch(err=>{
         console.log("err",err);
-    })
+    }) 
 
     const newMed=new medicines({
         name:req.body.name,
@@ -38,9 +39,9 @@ let flag=0
         image:req.file,
         count:req.body.count
     })
-    
-    newMed.save().then(data=>{
-        res.json({
+    if(flag==0){
+  await  newMed.save().then(data=>{
+       return res.json({
             status:200,
             msg:"Inserted successfully",
             data:data
@@ -48,12 +49,13 @@ let flag=0
     }).catch(err=>{
       
       
-        res.json({
+      return  res.json({
             status:500,
             msg:"Data not Inserted",
             Error:err
         })
     })
+}
 }
 //View all 
   

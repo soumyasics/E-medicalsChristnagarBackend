@@ -44,7 +44,7 @@ router.post('/deleteDoctorById/:id',doctor.deleteDoctorById)//done
 router.post('/forgotPwdDoctor',doctor.forgotPwd)
 router.post('/viewDoctorsByHospitalId/:id',doctor.viewDoctorsByHospitalId)//done
 router.post('/viewDoctorBySpecialization',doctor.viewDoctorBySpecialization)//done
-router.post('/checkDay/:id',doctor.checkDay)
+router.post('/checkDay/:id',doctor.checkDay)//done
 
 
 //test
@@ -77,11 +77,11 @@ router.post('/viewResultById/:id',result.viewResultById)
 router.post('/viewResultByUserId/:id',result.viewResultByUserId)
 
 //Pharmacy
-router.post('/addMedicine',medicines.upload,medicines.addMedicine)
-router.post('/viewmedicines',medicines.viewmedicines)
+router.post('/addMedicine',medicines.upload,medicines.addMedicine)//done
+router.post('/viewmedicines',medicines.viewmedicines)//done
 
 //DR appointments
-router.post('/addAppointment',appointments.addAppointment)
+router.post('/addAppointment',appointments.addAppointment)//done
 router.post('/viewAppointmentByUserId/:userid',appointments.viewAppointmentByUserId)
 router.post('/viewTodaysAppointmentForDr/:doctorid',appointments.viewTodaysAppointmentForDr)
 router.post('/cancelAppointment/:appointmentId',appointments.cancelAppointment)

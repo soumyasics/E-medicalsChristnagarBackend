@@ -64,7 +64,7 @@ const loginDoctor=(req,res)=>{
     const password=req.body.password
   
     doctors.findOne({email:email}).exec().then(data=>{
-      if(data.length>0){
+      if(data!=null){
       if(password==data.password){
         res.json({
           status:200,
