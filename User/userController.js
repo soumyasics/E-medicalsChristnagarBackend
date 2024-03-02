@@ -1,3 +1,6 @@
+const appointmentSchema = require("../DoctorAppointments/appointmentSchema");
+const prescriptionSchema = require("../Doctors/Prescriptions/prescriptionSchema");
+const resultSchema = require("../Lab/Results/resultSchema");
 const users = require("./userSchema");
 const multer = require("multer");
 
@@ -227,6 +230,53 @@ const forgotPwd = (req, res) => {
     });
 };
 
+
+const viewMedicalhistory=async(req,res)=>{
+  let appointments=[],labreports=[],prescriptions=[]
+ await appointmentSchema.find({userid:req.params.id})
+  .populate('doctorid')
+  .populate('hospitalid')
+  .exec()
+  .then((data) => {
+    console.log(data);
+    appointments=data
+  })
+  .catch((err) => {
+    console.log(err);
+    
+  });
+  await prescriptionSchema.find({userid:req.params.id})
+  .populate('doctorid')
+  .exec()
+  .then((datass) => {
+    console.log(datass);
+    prescriptions=datass
+  })
+  .catch((err) => {
+    console.log(err);
+    
+  });
+
+
+  await resultSchema.find({userid:req.params.id})
+  .populate('testid')
+  .exec()
+  .then((datas) => {
+    console.log(datas);
+    labreports=datas
+  })
+  .catch((err) => {
+    console.log(err);
+    
+  });
+  res.json({
+    status: 200,
+        msg: "Data obtained successfully",
+        labreports,
+        appointments,
+        prescriptions
+  })
+}
 module.exports = {
   registerUser,
   viewUsers,
@@ -236,4 +286,5 @@ module.exports = {
   viewUserById,
   deleteUserById,
   upload,
+viewMedicalhistory
 };

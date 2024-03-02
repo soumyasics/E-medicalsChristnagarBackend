@@ -9,6 +9,7 @@ const result=require('./Lab/Results/resultController')
 const doctor=require('./Doctors/doctorController')
 const medicines=require('./Pharmacy/pharmacyController')
 const appointments=require('./DoctorAppointments/appointmentController')
+const prescriptions=require('./Doctors/Prescriptions/prescriptionController')
 
 //user routes
 router.post('/registerUser',userController.upload,userController.registerUser)//done
@@ -18,6 +19,9 @@ router.post('/viewUsers',userController.viewUsers)
 router.post('/editUserById/:id',userController.upload,userController.editUserById)//done
 router.post('/deleteUserById/:id',userController.deleteUserById)
 router.post('/forgotPwdUser',userController.forgotPwd)//done
+
+router.post('/viewMedicalhistory/:id',userController.viewMedicalhistory)//New Apis
+
 
 
 //hospital routes
@@ -80,5 +84,12 @@ router.post('/viewmedicines',medicines.viewmedicines)
 router.post('/addAppointment',appointments.addAppointment)
 router.post('/viewAppointmentByUserId/:userid',appointments.viewAppointmentByUserId)
 router.post('/viewTodaysAppointmentForDr/:doctorid',appointments.viewTodaysAppointmentForDr)
+router.post('/cancelAppointment/:appointmentId',appointments.cancelAppointment)
+
+
+
+router.post('/addPrescription/:id',prescriptions.addPrescription)//new Api
+router.post('/viewPrescriptionByDrId/:id',prescriptions.viewPrescriptionByDrId)//new Api
+router.post('/viewPrescriptionByUserId/:id',prescriptions.viewPrescriptionByUserId)//new Api
 
 module.exports=router
