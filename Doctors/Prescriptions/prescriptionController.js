@@ -12,6 +12,14 @@ await appointmentSchema.findById({_id:req.params.id}).populate('doctorid').exec(
 .catch(err=>{
     console.log(err);
 })
+await appointmentSchema.findByIdAndUpdate({_id:req.params.id},{
+    drvisited:true
+}).exec().then(data=>{
+    console.log("update drvisited");
+})
+.catch(err=>{
+    console.log(err);
+})
 const {
    
     userid,

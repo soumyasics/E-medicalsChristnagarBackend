@@ -20,6 +20,9 @@ const appointmentSchema=mongoose.Schema({
     },
     date:{
         type:Date
+    },drvisited:{
+        type:Boolean,
+        default:false
     }
 
 });
