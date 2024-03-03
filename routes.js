@@ -69,8 +69,8 @@ router.post('/approveBookingById/:id',booking.approveBookingById)//done
 //results
 router.post('/addResult',result.addResult)//done
 router.post('/viewResultByBookingId/:id',result.viewResultByBookingId)//done
-router.post('/viewResultById/:id',result.viewResultById)
-router.post('/viewResultByUserId/:id',result.viewResultByUserId)
+router.post('/viewResultById/:id',result.viewResultById)//done
+router.post('/viewResultByUserId/:id',result.viewResultByUserId)//done
 
 //Pharmacy
 router.post('/addMedicine',medicines.upload,medicines.addMedicine)//done
@@ -78,7 +78,7 @@ router.post('/viewmedicines',medicines.viewmedicines)//done
 
 //DR appointments
 router.post('/addAppointment',appointments.addAppointment)//done
-router.post('/viewAppointmentByUserId/:userid',appointments.viewAppointmentByUserId)
-router.post('/viewTodaysAppointmentForDr/:doctorid',appointments.viewTodaysAppointmentForDr)
+router.post('/viewAppointmentByUserId/:userid',appointments.viewAppointmentByUserId)//done
+router.post('/viewTodaysAppointmentForDr/:doctorid',appointments.viewTodaysAppointmentForDr)//done
 
 module.exports=router
