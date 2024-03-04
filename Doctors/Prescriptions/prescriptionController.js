@@ -105,7 +105,38 @@ const viewPrescriptionByUserId=(req,res)=>{
   
   }
 
+
+
+
+
+
+  const viewPrescriptionById=(req,res)=>{
+    prescriptions.findById({_id:req.params.id}).populate('userid').exec()
+    .then(data=>{
+      if(data.length>0){
+      res.json({
+          status:200,
+          msg:"Data obtained successfully",
+          data:data
+      })
+    }else{
+      res.json({
+        status:200,
+        msg:"No Data obtained "
+    })
+    }
+  }).catch(err=>{
+      res.json({
+          status:500,
+          msg:"Data not Inserted",
+          Error:err
+      })
+  })
+  
+  }
+
 module.exports={addPrescription,
     viewPrescriptionByUserId,
-    viewPrescriptionByDrId
+    viewPrescriptionByDrId,
+    viewPrescriptionById
 }

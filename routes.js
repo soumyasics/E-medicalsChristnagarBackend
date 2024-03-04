@@ -91,5 +91,6 @@ router.post('/cancelAppointment/:appointmentId',appointments.cancelAppointment)
 router.post('/addPrescription/:id',prescriptions.addPrescription)//done
 router.post('/viewPrescriptionByDrId/:id',prescriptions.viewPrescriptionByDrId)//new Api
 router.post('/viewPrescriptionByUserId/:id',prescriptions.viewPrescriptionByUserId)//new Api
+router.post('/viewPrescriptionById/:id',prescriptions.viewPrescriptionById)//new Api
 
 module.exports=router
