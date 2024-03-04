@@ -99,7 +99,64 @@ const viewAppointmentByUserId=(req,res)=>{
             })
         })
 }
+const cancelAppointment = (req, res) => {
+    let appointmentId = req.params.appointmentId;
+    let today = new Date();
+    let startOfToday = new Date(today);
+    startOfToday.setHours(0, 0, 0, 0); // Set time to the beginning of the day
+
+    appointmentSchema.findById(appointmentId)
+        .exec()
+        .then(appointment => {
+            if (!appointment) {
+                return res.status(404).json({
+                    status: 404,
+                    msg: "Appointment not found"
+                });
+            }
+
+            let appointmentDate = new Date(appointment.date);
+            let appointmentDay = new Date(appointmentDate);
+            appointmentDay.setHours(0, 0, 0, 0); // Set time to the beginning of the appointment day
+
+            if (appointmentDay.getDate() <= startOfToday.getDate()) {
+                return res.status(400).json({
+                    status: 400,
+                    msg: "Cannot cancel appointments scheduled for today or past dates."
+                });
+            }
+
+            // Proceed to cancel the appointment
+            appointmentSchema.findByIdAndDelete(appointmentId)
+                .exec()
+                .then(result => {
+                    res.json({
+                        status: 200,
+                        msg: "Appointment cancelled successfully",
+                        data: result
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).json({
+                        status: 500,
+                        msg: "Error occurred while cancelling appointment",
+                        Error: err
+                    });
+                });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                status: 500,
+                msg: "Error occurred while fetching appointment",
+                Error: err
+            });
+        });
+};
+
 
 module.exports={addAppointment,
 viewAppointmentByUserId,
-viewTodaysAppointmentForDr}
+viewTodaysAppointmentForDr,
+cancelAppointment}
