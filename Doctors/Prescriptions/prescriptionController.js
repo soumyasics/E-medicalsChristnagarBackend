@@ -106,14 +106,39 @@ const viewPrescriptionByUserId=(req,res)=>{
   }
 
 
-
+  const viewPrescriptionByAppointId=(req,res)=>{
+    prescriptions.find({appointmentid:req.params.id})
+    .populate('userid')
+    .exec()
+    .then(data=>{
+      if(data.length>0){
+      res.json({
+          status:200,
+          msg:"Data obtained successfully",
+          data:data
+      })
+    }else{
+      res.json({
+        status:200,
+        msg:"No Data obtained "
+    })
+    }
+  }).catch(err=>{
+      res.json({
+          status:500,
+          msg:"Data not Inserted",
+          Error:err
+      })
+  })
+  
+  }
 
 
 
   const viewPrescriptionById=(req,res)=>{
     prescriptions.findById({_id:req.params.id}).populate('userid').exec()
     .then(data=>{
-      if(data.length>0){
+      if(data==null){
       res.json({
           status:200,
           msg:"Data obtained successfully",
@@ -138,5 +163,6 @@ const viewPrescriptionByUserId=(req,res)=>{
 module.exports={addPrescription,
     viewPrescriptionByUserId,
     viewPrescriptionByDrId,
-    viewPrescriptionById
+    viewPrescriptionById,
+    viewPrescriptionByAppointId
 }
