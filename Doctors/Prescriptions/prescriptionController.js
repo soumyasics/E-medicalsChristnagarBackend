@@ -107,11 +107,12 @@ const viewPrescriptionByUserId=(req,res)=>{
 
 
   const viewPrescriptionByAppointId=(req,res)=>{
-    prescriptions.find({appointmentid:req.params.id})
+    prescriptions.findOne({appointmentid:req.params.id})
     .populate('userid')
+    .populate('doctorid')
     .exec()
     .then(data=>{
-      if(data.length>0){
+      if(data!=null){
       res.json({
           status:200,
           msg:"Data obtained successfully",
@@ -138,7 +139,7 @@ const viewPrescriptionByUserId=(req,res)=>{
   const viewPrescriptionById=(req,res)=>{
     prescriptions.findById({_id:req.params.id}).populate('userid').exec()
     .then(data=>{
-      if(data==null){
+      if(data!=null){
       res.json({
           status:200,
           msg:"Data obtained successfully",

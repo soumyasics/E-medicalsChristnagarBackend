@@ -195,7 +195,7 @@ const loginDoctor=(req,res)=>{
   }
 // view  by id
   const viewDoctorById=(req,res)=>{
-    doctors.findById({_id:req.params.id}).exec()
+    doctors.findById({_id:req.params.id}).populate('hospitalid').exec()
     .then(data=>{
       console.log(data);
       res.json({
