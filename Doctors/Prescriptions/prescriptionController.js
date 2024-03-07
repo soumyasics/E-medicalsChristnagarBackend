@@ -137,7 +137,7 @@ const viewPrescriptionByUserId=(req,res)=>{
 
 
   const viewPrescriptionById=(req,res)=>{
-    prescriptions.findById({_id:req.params.id}).populate('userid').exec()
+    prescriptions.findById({_id:req.params.id}).populate('doctorid').populate('userid').exec()
     .then(data=>{
       if(data!=null){
       res.json({

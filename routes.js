@@ -20,7 +20,7 @@ router.post('/editUserById/:id',userController.upload,userController.editUserByI
 router.post('/deleteUserById/:id',userController.deleteUserById)
 router.post('/forgotPwdUser',userController.forgotPwd)//done
 
-router.post('/viewMedicalhistory/:id',userController.viewMedicalhistory)//New Apis
+router.post('/viewMedicalhistory/:id',userController.viewMedicalhistory)//done
 
 
 
@@ -84,14 +84,14 @@ router.post('/viewmedicines',medicines.viewmedicines)//done
 router.post('/addAppointment',appointments.addAppointment)//done
 router.post('/viewAppointmentByUserId/:userid',appointments.viewAppointmentByUserId)//done
 router.post('/viewTodaysAppointmentForDr/:doctorid',appointments.viewTodaysAppointmentForDr)//done
-router.post('/cancelAppointment/:appointmentId',appointments.cancelAppointment)
+router.post('/cancelAppointment/:appointmentId',appointments.cancelAppointment)//done
 
 
 
 router.post('/addPrescription/:id',prescriptions.addPrescription)//done
-router.post('/viewPrescriptionByDrId/:id',prescriptions.viewPrescriptionByDrId)//new Api
+router.post('/viewPrescriptionByDrId/:id',prescriptions.viewPrescriptionByDrId)//done
 router.post('/viewPrescriptionByUserId/:id',prescriptions.viewPrescriptionByUserId)//new Api
-router.post('/viewPrescriptionById/:id',prescriptions.viewPrescriptionById)//new Api
-router.post('/viewPrescriptionByAppointId/:id',prescriptions.viewPrescriptionByAppointId)//new Api
+router.post('/viewPrescriptionById/:id',prescriptions.viewPrescriptionById)//done
+router.post('/viewPrescriptionByAppointId/:id',prescriptions.viewPrescriptionByAppointId)//done
 
 module.exports=router
