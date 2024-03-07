@@ -1,109 +1,109 @@
 const appointmentSchema = require('../../DoctorAppointments/appointmentSchema');
-let prescriptions=require('./prescriptionSchema')
+let prescriptions = require('./prescriptionSchema')
 
 
-const addPrescription=async (req,res)=>{
+const addPrescription = async (req, res) => {
 
-let doctorid=null,department='',date=new Date()
-await appointmentSchema.findById({_id:req.params.id}).populate('doctorid').exec().then(data=>{
-    doctorid=data.doctorid._id
-    department=data.doctorid.specialization
-})
-.catch(err=>{
-    console.log(err);
-})
-await appointmentSchema.findByIdAndUpdate({_id:req.params.id},{
-    drvisited:true
-}).exec().then(data=>{
-    console.log("update drvisited");
-})
-.catch(err=>{
-    console.log(err);
-})
-const {
-   
-    userid,
-    analysisreport,
-    medications
-} = req.body;
-
-const newPrescription = new prescriptions({
-    appointmentid:req.params.id,
-    doctorid:doctorid,
-    userid,
-    date:date,
-    department:department,
-    analysisreport,
-    medications
-});
-
- await newPrescription.save().then(data=>{
-    res.json({
-        status:200,
-        msg:"Inserted successfully",
-        data:data
+  let doctorid = null, department = '', date = new Date()
+  await appointmentSchema.findById({ _id: req.params.id }).populate('doctorid').exec().then(data => {
+    doctorid = data.doctorid._id
+    department = data.doctorid.specialization
+  })
+    .catch(err => {
+      console.log(err);
     })
-}).catch(err=>{ 
+  await appointmentSchema.findByIdAndUpdate({ _id: req.params.id }, {
+    drvisited: true
+  }).exec().then(data => {
+    console.log("update drvisited");
+  })
+    .catch(err => {
+      console.log(err);
+    })
+  const {
+
+    userid,
+    analysisreport,
+    medications
+  } = req.body;
+
+  const newPrescription = new prescriptions({
+    appointmentid: req.params.id,
+    doctorid: doctorid,
+    userid,
+    date: date,
+    department: department,
+    analysisreport,
+    medications
+  });
+
+  await newPrescription.save().then(data => {
     res.json({
-    status:500,
-    msg:"Data not Inserted",
-    Error:err
-})
-})
+      status: 200,
+      msg: "Inserted successfully",
+      data: data
+    })
+  }).catch(err => {
+    res.json({
+      status: 500,
+      msg: "Data not Inserted",
+      Error: err
+    })
+  })
 
 }
 
 
-const viewPrescriptionByUserId=(req,res)=>{
-    prescriptions.find({userid:req.params.id}).populate('doctorid').exec()
-    .then(data=>{
-      if(data.length>0){
+const viewPrescriptionByUserId = (req, res) => {
+  prescriptions.find({ userid: req.params.id }).populate('doctorid').exec()
+    .then(data => {
+      if (data.length > 0) {
+        res.json({
+          status: 200,
+          msg: "Data obtained successfully",
+          data: data
+        })
+      } else {
+        res.json({
+          status: 200,
+          msg: "No Data obtained "
+        })
+      }
+    }).catch(err => {
+      console.log(err);
       res.json({
-          status:200,
-          msg:"Data obtained successfully",
-          data:data
+        status: 500,
+        msg: "Data not Inserted",
+        Error: err
       })
-    }else{
-      res.json({
-        status:200,
-        msg:"No Data obtained "
     })
-    }
-  }).catch(err=>{
-    console.log(err);
-      res.json({
-          status:500,
-          msg:"Data not Inserted",
-          Error:err
-      })
-  })
-  
-  }
 
-  const viewPrescriptionByDrId=(req,res)=>{
-    prescriptions.find({doctorid:req.params.id}).populate('userid').exec()
-    .then(data=>{
-      if(data.length>0){
+}
+
+const viewPrescriptionByDrId = (req, res) => {
+  prescriptions.find({ doctorid: req.params.id }).populate('userid').exec()
+    .then(data => {
+      if (data.length > 0) {
+        res.json({
+          status: 200,
+          msg: "Data obtained successfully",
+          data: data
+        })
+      } else {
+        res.json({
+          status: 200,
+          msg: "No Data obtained "
+        })
+      }
+    }).catch(err => {
       res.json({
-          status:200,
-          msg:"Data obtained successfully",
-          data:data
+        status: 500,
+        msg: "Data not Inserted",
+        Error: err
       })
-    }else{
-      res.json({
-        status:200,
-        msg:"No Data obtained "
     })
-    }
-  }).catch(err=>{
-      res.json({
-          status:500,
-          msg:"Data not Inserted",
-          Error:err
-      })
-  })
-  
-  }
+
+}
 
 
   const viewPrescriptionByAppointId=(req,res)=>{
@@ -126,13 +126,13 @@ const viewPrescriptionByUserId=(req,res)=>{
     }
   }).catch(err=>{
       res.json({
-          status:500,
-          msg:"Data not Inserted",
-          Error:err
+        status: 500,
+        msg: "Data not Inserted",
+        Error: err
       })
-  })
-  
-  }
+    })
+
+}
 
 
 
@@ -153,17 +153,38 @@ const viewPrescriptionByUserId=(req,res)=>{
     }
   }).catch(err=>{
       res.json({
-          status:500,
-          msg:"Data not Inserted",
-          Error:err
+        status: 500,
+        msg: "Data not Inserted",
+        Error: err
       })
-  })
-  
-  }
+    })
 
-module.exports={addPrescription,
-    viewPrescriptionByUserId,
-    viewPrescriptionByDrId,
-    viewPrescriptionById,
-    viewPrescriptionByAppointId
+}
+const sharePrescriptionTionToPharmacy = (req, res) => {
+  prescriptions.findByIdAndUpdate({ _id: req.params.id },
+     { pharmacyNeeded: true })
+    .exec()
+    .then(data => {
+      res.json({
+        status: 200,
+        msg: "Updated successfully",
+        data: data
+      })
+    }).catch(err => {
+      res.json({
+        status: 500,
+        msg: "Data not Updated",
+        Error: err
+      })
+    })
+}
+
+
+module.exports = {
+  addPrescription,
+  viewPrescriptionByUserId,
+  viewPrescriptionByDrId,
+  viewPrescriptionById,
+  viewPrescriptionByAppointId,
+  sharePrescriptionTionToPharmacy
 }

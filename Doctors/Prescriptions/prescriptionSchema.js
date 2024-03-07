@@ -48,11 +48,17 @@ const prescriptions = mongoose.Schema({
                 required: true
             },
             comments: {
-                type: String,
-                required: true
+                type: String
             }
         }
     ]
-
+,pharmacyNeeded:{
+    type: Boolean,
+    default: false
+},
+pharmacyprocessed:{
+    type: Boolean,
+    default: false
+}
 });
 module.exports = mongoose.model('prescriptions', prescriptions)
