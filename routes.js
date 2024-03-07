@@ -94,5 +94,6 @@ router.post('/viewPrescriptionByDrId/:id',prescriptions.viewPrescriptionByDrId)/
 router.post('/viewPrescriptionByUserId/:id',prescriptions.viewPrescriptionByUserId)//new Api
 router.post('/viewPrescriptionById/:id',prescriptions.viewPrescriptionById)//done
 router.post('/viewPrescriptionByAppointId/:id',prescriptions.viewPrescriptionByAppointId)//done
+router.post('/sharePrescriptionTionToPharmacy/:id',prescriptions.sharePrescriptionTionToPharmacy)//new 
 
 module.exports=router
