@@ -19,7 +19,7 @@ const hSchema = mongoose.Schema({
         type: Date,
         required: true
     },
-    dosage: String,
+    dosage: Number,
     comments: {
         type: String,
     },
@@ -28,6 +28,10 @@ const hSchema = mongoose.Schema({
     },
     count:{
         type:Number,
+        required:true
+    },
+     type:{
+        type: String,
         required:true
     }
 });

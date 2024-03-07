@@ -38,7 +38,8 @@ let flag=0
         dosage:req.body.dosage,
         comments:req.body.comments,
         image:req.file,
-        count:req.body.count
+        count:req.body.count,
+        typoe:req.body.type
     })
     if(flag==0){
   await  newMed.save().then(data=>{
@@ -113,9 +114,118 @@ const viewPrescriptionReqs=(req,res)=>{
 }
 
 
+async function checkMedicationAvailability(prescription) {
+  const medications = prescription.medications;
+
+  const medicationAvailability = [];
+
+  for (const medication of medications) {
+      const medicine = await medicines.findOne({ name: medication.name,dosage:medication.dosage});
+
+      // Check if the medicine exists in the pharmacy
+      if (medicine) {
+
+        if (medicine.expiryDate < new Date()) {
+          medicationAvailability.push({
+              name: medicine.name,
+              available: "Expired",
+              message: 'Medication expired.'
+          });
+          continue; // Skip to the next medication
+      }
+
+         
+          if(medicine.type=="Tablet"){
+          if (medicine.count > (medication.frequency*medication.courseduration)) {
+              // Add medication availability status
+              medicationAvailability.push({
+                  name: medicine.name,
+                  available: "complete",
+                  count: medication.frequency*medication.courseduration,
+
+                  message: `Available in stock. ${medicine.count} units remaining.`
+              });
+             
+
+              } else if(medicine.count > 0) {
+                // Add medication availability status
+                medicationAvailability.push({
+                    name: medicine.name,
+                    available: "partial",
+                    count: medicine.count,
+                    message: `Available in stock. But  ${medicine.count} units remaining.`
+                });
+               
+  
+                } else {
+              // Add medication availability status
+              medicationAvailability.push({
+                  name: medicine.name,
+                  available: "Not",
+                  count:0, 
+                  message: 'Out of stock. '
+              });
+          }
+        }else{
+          if (medicine.count >0) {
+            // Add medication availability status
+            medicationAvailability.push({
+                name: medicine.name,
+                available: "complete",
+                count:medicine.count,
+                message: `Available in stock. ${medicine.count} units remaining.`
+            });
+        } else {
+            // Add medication availability status
+            medicationAvailability.push({
+                name: medicine.name,
+                available: "Not",
+              
+                message: 'Out of stock.'
+            });
+        }
+        }
+      } else {
+          // Medication not found in pharmacy
+          medicationAvailability.push({
+              name: medication.name,
+              available: "Not",
+              message: 'Not available in pharmacy.'
+          });
+      }
+  }
+
+  return medicationAvailability;
+}
+
+// Usage example: Assuming you have a prescription object
+
+
+const checkMedicine=(req,res)=>{
+  const prescription = req.body;
+
+  // Call the function to check medication availability
+  checkMedicationAvailability(prescription)
+    .then(medicationAvailability => {
+        console.log('Medication availability:', medicationAvailability);
+        res.json({
+          status:200,
+          medicationAvailability
+        })
+    })
+    .catch(error => {
+        console.error('Error checking medication availability:', error);
+        res.json({
+          status:500,
+          medicationAvailability:null
+        })
+    });
+}
+
 module.exports={
     addMedicine,
     viewmedicines,
     upload,
-    viewPrescriptionReqs
+    viewPrescriptionReqs,
+    checkMedicine
 }
