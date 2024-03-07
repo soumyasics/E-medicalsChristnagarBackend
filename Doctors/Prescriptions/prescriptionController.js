@@ -106,24 +106,25 @@ const viewPrescriptionByDrId = (req, res) => {
 }
 
 
-const viewPrescriptionByAppointId = (req, res) => {
-  prescriptions.find({ appointmentid: req.params.id })
+  const viewPrescriptionByAppointId=(req,res)=>{
+    prescriptions.findOne({appointmentid:req.params.id})
     .populate('userid')
+    .populate('doctorid')
     .exec()
-    .then(data => {
-      if (data.length > 0) {
-        res.json({
-          status: 200,
-          msg: "Data obtained successfully",
-          data: data
-        })
-      } else {
-        res.json({
-          status: 200,
-          msg: "No Data obtained "
-        })
-      }
-    }).catch(err => {
+    .then(data=>{
+      if(data!=null){
+      res.json({
+          status:200,
+          msg:"Data obtained successfully",
+          data:data
+      })
+    }else{
+      res.json({
+        status:200,
+        msg:"No Data obtained "
+    })
+    }
+  }).catch(err=>{
       res.json({
         status: 500,
         msg: "Data not Inserted",
@@ -133,22 +134,24 @@ const viewPrescriptionByAppointId = (req, res) => {
 
 }
 
-const viewPrescriptionById = (req, res) => {
-  prescriptions.findById({ _id: req.params.id }).populate('userid').exec()
-    .then(data => {
-      if (data != null) {
-        res.json({
-          status: 200,
-          msg: "Data obtained successfully",
-          data: data
-        })
-      } else {
-        res.json({
-          status: 200,
-          msg: "No Data obtained "
-        })
-      }
-    }).catch(err => {
+
+
+  const viewPrescriptionById=(req,res)=>{
+    prescriptions.findById({_id:req.params.id}).populate('doctorid').populate('userid').exec()
+    .then(data=>{
+      if(data!=null){
+      res.json({
+          status:200,
+          msg:"Data obtained successfully",
+          data:data
+      })
+    }else{
+      res.json({
+        status:200,
+        msg:"No Data obtained "
+    })
+    }
+  }).catch(err=>{
       res.json({
         status: 500,
         msg: "Data not Inserted",

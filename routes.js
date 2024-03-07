@@ -20,7 +20,7 @@ router.post('/editUserById/:id',userController.upload,userController.editUserByI
 router.post('/deleteUserById/:id',userController.deleteUserById)
 router.post('/forgotPwdUser',userController.forgotPwd)//done
 
-router.post('/viewMedicalhistory/:id',userController.viewMedicalhistory)//New Apis
+router.post('/viewMedicalhistory/:id',userController.viewMedicalhistory)//done
 
 
 
@@ -73,8 +73,8 @@ router.post('/approveBookingById/:id',booking.approveBookingById)//done
 //results
 router.post('/addResult',result.addResult)//done
 router.post('/viewResultByBookingId/:id',result.viewResultByBookingId)//done
-router.post('/viewResultById/:id',result.viewResultById)
-router.post('/viewResultByUserId/:id',result.viewResultByUserId)
+router.post('/viewResultById/:id',result.viewResultById)//done
+router.post('/viewResultByUserId/:id',result.viewResultByUserId)//done
 
 //Pharmacy
 router.post('/addMedicine',medicines.upload,medicines.addMedicine)//done
@@ -83,18 +83,16 @@ router.post('/viewPrescriptionReqs/:id',medicines.viewPrescriptionReqs)//new
 
 //DR appointments
 router.post('/addAppointment',appointments.addAppointment)//done
-router.post('/viewAppointmentByUserId/:userid',appointments.viewAppointmentByUserId)
-router.post('/viewTodaysAppointmentForDr/:doctorid',appointments.viewTodaysAppointmentForDr)
-router.post('/cancelAppointment/:appointmentId',appointments.cancelAppointment)
+router.post('/viewAppointmentByUserId/:userid',appointments.viewAppointmentByUserId)//done
+router.post('/viewTodaysAppointmentForDr/:doctorid',appointments.viewTodaysAppointmentForDr)//done
+router.post('/cancelAppointment/:appointmentId',appointments.cancelAppointment)//done
 
 
-router.post('/addPrescription/:id',prescriptions.addPrescription)//new Api
-router.post('/viewPrescriptionByDrId/:id',prescriptions.viewPrescriptionByDrId)//new Api
+
+router.post('/addPrescription/:id',prescriptions.addPrescription)//done
+router.post('/viewPrescriptionByDrId/:id',prescriptions.viewPrescriptionByDrId)//done
 router.post('/viewPrescriptionByUserId/:id',prescriptions.viewPrescriptionByUserId)//new Api
-router.post('/viewPrescriptionById/:id',prescriptions.viewPrescriptionById)//new Api
-router.post('/viewPrescriptionByAppointId/:id',prescriptions.viewPrescriptionByAppointId)//new Api
-router.post('/sharePrescriptionTionToPharmacy/:id',prescriptions.sharePrescriptionTionToPharmacy)//new Api
-
-
+router.post('/viewPrescriptionById/:id',prescriptions.viewPrescriptionById)//done
+router.post('/viewPrescriptionByAppointId/:id',prescriptions.viewPrescriptionByAppointId)//done
 
 module.exports=router
