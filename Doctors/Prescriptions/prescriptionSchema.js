@@ -40,7 +40,7 @@ const prescriptions = mongoose.Schema({
                 required: true
             },
             frequency: {
-                type: String,
+                type: Number,
                 required: true
             },
             courseduration: {
@@ -50,6 +50,7 @@ const prescriptions = mongoose.Schema({
             comments: {
                 type: String
             }
+           
         }
     ]
 ,pharmacyNeeded:{
