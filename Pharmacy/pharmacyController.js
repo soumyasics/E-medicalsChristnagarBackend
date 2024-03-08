@@ -39,7 +39,7 @@ const addMedicine = async (req, res) => {
     comments: req.body.comments,
     image: req.file,
     count: req.body.count,
-    typoe: req.body.type
+    type: req.body.type
   })
   if (flag == 0) {
     await newMed.save().then(data => {
