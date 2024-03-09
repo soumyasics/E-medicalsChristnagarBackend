@@ -160,25 +160,6 @@ const viewPrescriptionByDrId = (req, res) => {
     })
 
 }
-const sharePrescriptionTionToPharmacy = (req, res) => {
-  prescriptions.findByIdAndUpdate({ _id: req.params.id },
-     { pharmacyNeeded: true })
-    .exec()
-    .then(data => {
-      res.json({
-        status: 200,
-        msg: "Updated successfully",
-        data: data
-      })
-    }).catch(err => {
-      res.json({
-        status: 500,
-        msg: "Data not Updated",
-        Error: err
-      })
-    })
-}
-
 
 module.exports = {
   addPrescription,
@@ -186,5 +167,5 @@ module.exports = {
   viewPrescriptionByDrId,
   viewPrescriptionById,
   viewPrescriptionByAppointId,
-  sharePrescriptionTionToPharmacy
+  
 }

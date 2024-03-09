@@ -114,8 +114,8 @@ const viewPrescriptionReqs = (req, res) => {
 }
 
 
-async function checkMedicationAvailability(prescription) {
-  const medications = prescription.medications;
+async function checkMedicationAvailability(dbmedications) {
+  const medications =dbmedications;
 
   const medicationAvailability = [];
 let price=0
@@ -215,10 +215,36 @@ price:0,
 
 
 const checkMedicine = (req, res) => {
-  const prescription = req.body;
+  
+}
+
+const sharePrescriptionTionToPharmacy =async (req, res) => {
+let prescription=""
+  await prescriptionSchema.findByIdAndUpdate({ _id: req.params.id },
+     { pharmacyNeeded: true })
+    .exec()
+    .then(data => {
+     console.log("updated");
+    }).catch(err => {
+      console.log(err);
+    })
+
+    await  prescriptionSchema.findById({ _id: req.params.id })
+     .exec()
+     .then(data => {
+      console.log("updated");
+      prescription=data
+      console.log(prescription);
+     }).catch(err => {
+       console.log(err);
+     })
+
+
+//medic
+dbmedications = prescription.medications;
 
   // Call the function to check medication availability
-  checkMedicationAvailability(prescription)
+  checkMedicationAvailability(dbmedications)
     .then(medicationAvailability => {
       console.log('Medication availability:', medicationAvailability);
       let price=0
@@ -238,12 +264,15 @@ price+=x.price
         medicationAvailability: null
       })
     });
+
 }
+
 
 module.exports = {
   addMedicine,
   viewmedicines,
   upload,
   viewPrescriptionReqs,
-  checkMedicine
+  checkMedicine,
+sharePrescriptionTionToPharmacy
 }
