@@ -79,7 +79,7 @@ router.post('/viewResultByUserId/:id',result.viewResultByUserId)//done
 //Pharmacy
 router.post('/addMedicine',medicines.upload,medicines.addMedicine)//done
 router.post('/viewmedicines',medicines.viewmedicines)//done
-router.post('/viewPrescriptionReqs/:id',medicines.viewPrescriptionReqs)//new
+router.post('/viewPrescriptionReqs',medicines.viewPrescriptionReqs)//done
 router.post('/checkMedicine',medicines.checkMedicine)//new
 
 //DR appointments
@@ -95,6 +95,6 @@ router.post('/viewPrescriptionByDrId/:id',prescriptions.viewPrescriptionByDrId)/
 router.post('/viewPrescriptionByUserId/:id',prescriptions.viewPrescriptionByUserId)//new Api
 router.post('/viewPrescriptionById/:id',prescriptions.viewPrescriptionById)//done
 router.post('/viewPrescriptionByAppointId/:id',prescriptions.viewPrescriptionByAppointId)//done
-router.post('/sharePrescriptionTionToPharmacy/:id',prescriptions.sharePrescriptionTionToPharmacy)//new 
+router.post('/sharePrescriptionTionToPharmacy/:id',prescriptions.sharePrescriptionTionToPharmacy)//done 
 
 module.exports=router
