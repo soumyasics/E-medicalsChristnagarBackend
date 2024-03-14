@@ -80,7 +80,7 @@ router.post('/viewResultByUserId/:id',result.viewResultByUserId)//done
 router.post('/addMedicine',medicines.upload,medicines.addMedicine)//done
 router.post('/viewmedicines',medicines.viewmedicines)//done
 router.post('/viewPrescriptionReqs',medicines.viewPrescriptionReqs)//done
-router.post('/checkMedicine',medicines.checkMedicine)//new
+router.post('/checkMedicine',medicines.checkMedicine)//new      
 
 //DR appointments
 router.post('/addAppointment',appointments.addAppointment)//done
