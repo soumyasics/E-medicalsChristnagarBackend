@@ -220,14 +220,14 @@ const checkMedicine = (req, res) => {
 
 const sharePrescriptionTionToPharmacy =async (req, res) => {
 let prescription=""
-  await prescriptionSchema.findByIdAndUpdate({ _id: req.params.id },
-     { pharmacyNeeded: true })
-    .exec()
-    .then(data => {
-     console.log("updated");
-    }).catch(err => {
-      console.log(err);
-    })
+  // await prescriptionSchema.findByIdAndUpdate({ _id: req.params.id },
+  //    { pharmacyNeeded: true })
+  //   .exec()
+  //   .then(data => {
+  //    console.log("updated");
+  //   }).catch(err => {
+  //     console.log(err);
+  //   })
 
     await  prescriptionSchema.findById({ _id: req.params.id })
      .exec()
