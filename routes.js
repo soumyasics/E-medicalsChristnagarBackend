@@ -82,6 +82,8 @@ router.post('/viewmedicines',medicines.viewmedicines)//done
 router.post('/viewPrescriptionReqs',medicines.viewPrescriptionReqs)//done
 router.post('/checkMedicine',medicines.checkMedicine)//new
 router.post('/sharePrescriptionTionToPharmacy/:id',medicines.sharePrescriptionTionToPharmacy)//done 
+router.post('/confirmMedBill',medicines.confirmMedBill)//new 
+router.post('/viewmedBillbyPid/:id',medicines.viewmedBillbyPid)//new 
 
 //DR appointments
 router.post('/addAppointment',appointments.addAppointment)//done
@@ -96,5 +98,6 @@ router.post('/viewPrescriptionByDrId/:id',prescriptions.viewPrescriptionByDrId)/
 router.post('/viewPrescriptionByUserId/:id',prescriptions.viewPrescriptionByUserId)//new Api
 router.post('/viewPrescriptionById/:id',prescriptions.viewPrescriptionById)//done
 router.post('/viewPrescriptionByAppointId/:id',prescriptions.viewPrescriptionByAppointId)//done
+
 
 module.exports=router

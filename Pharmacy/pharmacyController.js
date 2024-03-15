@@ -1,6 +1,6 @@
 const prescriptionSchema = require('../Doctors/Prescriptions/prescriptionSchema');
 const medicines = require('./medicineSchema')
-
+const medbills=require('./medicineBill')
 const multer = require('multer')
 
 
@@ -267,6 +267,57 @@ price+=x.price
 
 }
 
+const confirmMedBill=(req,res)=>{
+const newBill=new medbills({
+  pid: req.body.pid,
+  userid: req.body.userid,
+  date: new Date(),
+  medications: req.body.medications,
+  price: req.body.price
+})
+newBill.save()
+.then(data => {
+  return res.json({
+    status: 200,
+    msg: "Inserted successfully",
+    data: data
+  })
+}).catch(err => {
+
+
+  return res.json({
+    status: 500,
+    msg: "Data not Inserted",
+    Error: err
+  })
+})
+}
+const viewmedBillbyPid=(req,res)=>{
+    medbills.findOne({ pid:req.params.id })
+      .populate('userid').exec()
+      .then(data => {
+        if (data.length > 0) {
+          res.json({
+            status: 200,
+            msg: "Data obtained successfully",
+            data: data
+          })
+        } else {
+          res.json({
+            status: 200,
+            msg: "No Data obtained "
+          })
+        }
+      }).catch(err => {
+        res.json({
+          status: 500,
+          msg: "Data not Inserted",
+          Error: err
+        })
+      })
+  
+  }
+
 
 module.exports = {
   addMedicine,
@@ -274,5 +325,7 @@ module.exports = {
   upload,
   viewPrescriptionReqs,
   checkMedicine,
-sharePrescriptionTionToPharmacy
+sharePrescriptionTionToPharmacy,
+confirmMedBill,
+viewmedBillbyPid
 }
