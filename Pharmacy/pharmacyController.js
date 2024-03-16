@@ -260,7 +260,7 @@ let prescription=""
 };
 
 const confirmMedBill=async(req,res)=>{
-   await prescriptionSchema.findByIdAndUpdate({ _id: req.params.id },
+   await prescriptionSchema.findByIdAndUpdate({ _id: req.body.pid },
      { pharmacyNeeded: true })
     .exec()
     .then(data => {
