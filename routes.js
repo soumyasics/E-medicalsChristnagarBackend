@@ -84,6 +84,8 @@ router.post('/checkMedicine',medicines.checkMedicine)//new
 router.post('/sharePrescriptionTionToPharmacy/:id',medicines.sharePrescriptionTionToPharmacy)//done 
 router.post('/confirmMedBill',medicines.confirmMedBill)//new 
 router.post('/viewmedBillbyPid/:id',medicines.viewmedBillbyPid)//new 
+router.post('/viewmedBillforPharmacy',medicines.viewmedBillforPharmacy)//new 
+
 
 //DR appointments
 router.post('/addAppointment',appointments.addAppointment)//done
