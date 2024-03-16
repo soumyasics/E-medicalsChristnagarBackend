@@ -217,16 +217,9 @@ async function checkMedicationAvailability(dbmedications) {
 
 const checkMedicine = (req, res) => {};
 
-const sharePrescriptionTionToPharmacy = async (req, res) => {
-  let prescription = "";
-  // await prescriptionSchema.findByIdAndUpdate({ _id: req.params.id },
-  //    { pharmacyNeeded: true })
-  //   .exec()
-  //   .then(data => {
-  //    console.log("updated");
-  //   }).catch(err => {
-  //     console.log(err);
-  //   })
+const sharePrescriptionTionToPharmacy =async (req, res) => {
+let prescription=""
+ 
 
   await prescriptionSchema
     .findById({ _id: req.params.id })
@@ -266,58 +259,91 @@ const sharePrescriptionTionToPharmacy = async (req, res) => {
     });
 };
 
-const confirmMedBill = (req, res) => {
-  const newBill = new medbills({
-    pid: req.body.pid,
-    userid: req.body.userid,
-    date: new Date(),
-    medications: req.body.medications,
-    price: req.body.price,
-  });
-  newBill
-    .save()
-    .then((data) => {
-      return res.json({
-        status: 200,
-        msg: "Inserted successfully",
-        data: data,
-      });
-    })
-    .catch((err) => {
-      return res.json({
-        status: 500,
-        msg: "Data not Inserted",
-        Error: err,
-      });
-    });
-};
-const viewmedBillbyPid = (req, res) => {
-  medbills
-    .findOne({ pid: req.params.id })
-    .populate("userid")
+const confirmMedBill=async(req,res)=>{
+   await prescriptionSchema.findByIdAndUpdate({ _id: req.params.id },
+     { pharmacyNeeded: true })
     .exec()
-    .then((data) => {
-      if (data.length > 0) {
-        res.json({
-          status: 200,
-          msg: "Data obtained successfully",
-          data: data,
-        });
-      } else {
-        res.json({
-          status: 200,
-          msg: "No Data obtained ",
-        });
-      }
+    .then(data => {
+     console.log("updated");
+    }).catch(err => {
+      console.log(err);
     })
-    .catch((err) => {
-      res.json({
-        status: 500,
-        msg: "Data not Inserted",
-        Error: err,
-      });
-    });
-};
+const newBill=new medbills({
+  pid: req.body.pid,
+  userid: req.body.userid,
+  date: new Date(),
+  medications: req.body.medications,
+  price: req.body.price
+})
+await newBill.save()
+.then(data => {
+  return res.json({
+    status: 200,
+    msg: "Inserted successfully",
+    data: data
+  })
+}).catch(err => {
+
+
+  return res.json({
+    status: 500,
+    msg: "Data not Inserted",
+    Error: err
+  })
+})
+}
+const viewmedBillbyPid=(req,res)=>{
+    medbills.findOne({ pid:req.params.id })
+      .populate('userid').exec()
+      .then(data => {
+        if (data.length > 0) {
+          res.json({
+            status: 200,
+            msg: "Data obtained successfully",
+            data: data
+          })
+        } else {
+          res.json({
+            status: 200,
+            msg: "No Data obtained "
+          })
+        }
+      }).catch(err => {
+        res.json({
+          status: 500,
+          msg: "Data not Inserted",
+          Error: err
+        })
+      })
+  
+  }
+
+  const viewmedBillforPharmacy=(req,res)=>{
+    medbills.find({})
+      .populate('userid').exec()
+      .then(data => {
+        if (data.length > 0) {
+          res.json({
+            status: 200,
+            msg: "Data obtained successfully",
+            data: data
+          })
+        } else {
+          res.json({
+            status: 200,
+            msg: "No Data obtained "
+          })
+        }
+      }).catch(err => {
+        res.json({
+          status: 500,
+          msg: "Data not Inserted",
+          Error: err
+        })
+      })
+  
+  }
+
 
 module.exports = {
   addMedicine,
@@ -325,7 +351,8 @@ module.exports = {
   upload,
   viewPrescriptionReqs,
   checkMedicine,
-  sharePrescriptionTionToPharmacy,
-  confirmMedBill,
-  viewmedBillbyPid,
-};
+sharePrescriptionTionToPharmacy,
+confirmMedBill,
+viewmedBillbyPid,
+viewmedBillforPharmacy
+}
