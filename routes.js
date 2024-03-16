@@ -82,7 +82,7 @@ router.post('/viewmedicines',medicines.viewmedicines)//done
 router.post('/viewPrescriptionReqs',medicines.viewPrescriptionReqs)//done
 router.post('/checkMedicine',medicines.checkMedicine)//new
 router.post('/sharePrescriptionTionToPharmacy/:id',medicines.sharePrescriptionTionToPharmacy)//done 
-router.post('/confirmMedBill',medicines.confirmMedBill)//new 
+router.post('/confirmMedBill',medicines.confirmMedBill)//done 
 router.post('/viewmedBillbyPid/:id',medicines.viewmedBillbyPid)//new 
 router.post('/viewmedBillforPharmacy',medicines.viewmedBillforPharmacy)//new 
 
