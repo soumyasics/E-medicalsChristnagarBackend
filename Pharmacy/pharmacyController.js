@@ -296,7 +296,7 @@ const viewmedBillbyPid=(req,res)=>{
     medbills.findOne({ pid:req.params.id })
       .populate('userid').exec()
       .then(data => {
-        if (data.length > 0) {
+        if (data!=null) {
           res.json({
             status: 200,
             msg: "Data obtained successfully",
