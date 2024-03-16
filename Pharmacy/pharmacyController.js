@@ -1,8 +1,7 @@
-const prescriptionSchema = require('../Doctors/Prescriptions/prescriptionSchema');
-const medicines = require('./medicineSchema')
-const medbills=require('./medicineBill')
-const multer = require('multer')
-
+const prescriptionSchema = require("../Doctors/Prescriptions/prescriptionSchema");
+const medicines = require("./medicineSchema");
+const medbills = require("./medicineBill");
+const multer = require("multer");
 
 const storage = multer.diskStorage({
   destination: function (req, res, cb) {
@@ -16,18 +15,22 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage }).single("image");
 
 const addMedicine = async (req, res) => {
-  let flag = 0
-  await medicines.find({ name: req.body.name, dosage: req.body.dosage }).exec().then(data => {
-    if (data.length > 0) {
-      flag = 1
-      return res.json({
-        status: 409,
-        msg: "Medicine Already Added With Us !!!"
-      })
-    }
-  }).catch(err => {
-    console.log("err", err);
-  })
+  let flag = 0;
+  await medicines
+    .find({ name: req.body.name, dosage: req.body.dosage })
+    .exec()
+    .then((data) => {
+      if (data.length > 0) {
+        flag = 1;
+        return res.json({
+          status: 409,
+          msg: "Medicine Already Added With Us !!!",
+        });
+      }
+    })
+    .catch((err) => {
+      console.log("err", err);
+    });
 
   const newMed = new medicines({
     name: req.body.name,
@@ -39,117 +42,120 @@ const addMedicine = async (req, res) => {
     comments: req.body.comments,
     image: req.file,
     count: req.body.count,
-    type: req.body.type
-  })
+    type: req.body.type,
+  });
   if (flag == 0) {
-    await newMed.save().then(data => {
-      return res.json({
-        status: 200,
-        msg: "Inserted successfully",
-        data: data
+    await newMed
+      .save()
+      .then((data) => {
+        return res.json({
+          status: 200,
+          msg: "Inserted successfully",
+          data: data,
+        });
       })
-    }).catch(err => {
-
-
-      return res.json({
-        status: 500,
-        msg: "Data not Inserted",
-        Error: err
-      })
-    })
+      .catch((err) => {
+        return res.json({
+          status: 500,
+          msg: "Data not Inserted",
+          Error: err,
+        });
+      });
   }
-}
-//View all 
+};
+//View all
 
 const viewmedicines = (req, res) => {
-  medicines.find({}).exec()
-    .then(data => {
+  medicines
+    .find({})
+    .exec()
+    .then((data) => {
       if (data.length > 0) {
         res.json({
           status: 200,
           msg: "Data obtained successfully",
-          data: data
-        })
+          data: data,
+        });
       } else {
         res.json({
           status: 200,
-          msg: "No Data obtained "
-        })
+          msg: "No Data obtained ",
+        });
       }
-    }).catch(err => {
+    })
+    .catch((err) => {
       res.json({
         status: 500,
         msg: "Data not Inserted",
-        Error: err
-      })
-    })
-
-}
+        Error: err,
+      });
+    });
+};
 
 const viewPrescriptionReqs = (req, res) => {
-  prescriptionSchema.find({ pharmacyNeeded: true, pharmacyprocessed: false })
-    .populate('doctorid')
-    .populate('userid').exec()
-    .then(data => {
+  prescriptionSchema
+    .find({ pharmacyNeeded: true, pharmacyprocessed: false })
+    .populate("doctorid")
+    .populate("userid")
+    .exec()
+    .then((data) => {
       if (data.length > 0) {
         res.json({
           status: 200,
           msg: "Data obtained successfully",
-          data: data
-        })
+          data: data,
+        });
       } else {
         res.json({
           status: 200,
-          msg: "No Data obtained "
-        })
+          msg: "No Data obtained ",
+        });
       }
-    }).catch(err => {
+    })
+    .catch((err) => {
       res.json({
         status: 500,
         msg: "Data not Inserted",
-        Error: err
-      })
-    })
-
-}
-
+        Error: err,
+      });
+    });
+};
 
 async function checkMedicationAvailability(dbmedications) {
-  const medications =dbmedications;
+  const medications = dbmedications;
 
   const medicationAvailability = [];
-let price=0
+  let price = 0;
   for (const medication of medications) {
-    const medicine = await medicines.findOne({ name: medication.name, dosage: medication.dosage });
+    const medicine = await medicines.findOne({
+      name: medication.name,
+      dosage: medication.dosage,
+    });
 
     // Check if the medicine exists in the pharmacy
     if (medicine) {
-
       if (medicine.expiryDate < new Date()) {
         medicationAvailability.push({
           name: medicine.name,
           available: "Expired",
-          message: 'Medication expired.',
+          message: "Medication expired.",
           count: 0,
-            price:0,
+          price: 0,
         });
         continue; // Skip to the next medication
       }
 
-
       if (medicine.type == "Tablet") {
-        if (medicine.count > (medication.frequency * medication.courseduration)) {
+        if (medicine.count > medication.frequency * medication.courseduration) {
           // Add medication availability status
           medicationAvailability.push({
             name: medicine.name,
             available: "complete",
             count: medication.frequency * medication.courseduration,
-            price: (medicine.price) * (medicine.count),
+            price: medicine.price * medicine.count,
 
-            message: `Available in stock. ${medicine.count} units remaining.`
+            message: `Available in stock. ${medicine.count} units remaining.`,
           });
-
-
         } else if (medicine.count > 0) {
           // Add medication availability status
           medicationAvailability.push({
@@ -157,19 +163,16 @@ let price=0
             available: "partial",
             count: medicine.count,
             message: `Available in stock. But  ${medicine.count} units remaining.`,
-            price: (medicine.price) * (medicine.count)
+            price: medicine.price * medicine.count,
           });
-
-
         } else {
           // Add medication availability status
           medicationAvailability.push({
             name: medicine.name,
             available: "Not",
             count: 0,
-            message: 'Out of stock. ',
-            price: 0
-
+            message: "Out of stock. ",
+            price: 0,
           });
         }
       } else {
@@ -180,17 +183,16 @@ let price=0
             available: "complete",
             count: 1,
             message: `Available in stock. `,
-                price: (medicine.price) 
-
+            price: medicine.price,
           });
         } else {
           // Add medication availability status
           medicationAvailability.push({
             name: medicine.name,
             available: "Not",
-count:0,
-price:0,
-            message: 'Out of stock.'
+            count: 0,
+            price: 0,
+            message: "Out of stock.",
           });
         }
       }
@@ -199,13 +201,13 @@ price:0,
       medicationAvailability.push({
         name: medication.name,
         available: "Not",
-        message: 'Not available in pharmacy.',
-        count:0,
-price:0,
+        message: "Not available in pharmacy.",
+        count: 0,
+        price: 0,
       });
     }
-    price+=price
-    totalprice=price
+    price += price;
+    totalprice = price;
   }
 
   return medicationAvailability;
@@ -213,13 +215,10 @@ price:0,
 
 // Usage example: Assuming you have a prescription object
 
+const checkMedicine = (req, res) => {};
 
-const checkMedicine = (req, res) => {
-  
-}
-
-const sharePrescriptionTionToPharmacy =async (req, res) => {
-let prescription=""
+const sharePrescriptionTionToPharmacy = async (req, res) => {
+  let prescription = "";
   // await prescriptionSchema.findByIdAndUpdate({ _id: req.params.id },
   //    { pharmacyNeeded: true })
   //   .exec()
@@ -229,95 +228,96 @@ let prescription=""
   //     console.log(err);
   //   })
 
-    await  prescriptionSchema.findById({ _id: req.params.id })
-     .exec()
-     .then(data => {
+  await prescriptionSchema
+    .findById({ _id: req.params.id })
+    .exec()
+    .then((data) => {
       console.log("updated");
-      prescription=data
+      prescription = data;
       console.log(prescription);
-     }).catch(err => {
-       console.log(err);
-     })
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 
-
-//medic
-dbmedications = prescription.medications;
+  //medic
+  dbmedications = prescription.medications;
 
   // Call the function to check medication availability
   checkMedicationAvailability(dbmedications)
-    .then(medicationAvailability => {
-      console.log('Medication availability:', medicationAvailability);
-      let price=0
-      medicationAvailability.map(x=>{
-price+=x.price
-      })
+    .then((medicationAvailability) => {
+      console.log("Medication availability:", medicationAvailability);
+      let price = 0;
+      medicationAvailability.map((x) => {
+        price += x.price;
+      });
       res.json({
         status: 200,
         medicationAvailability,
-        price
-      })
+        price,
+      });
     })
-    .catch(error => {
-      console.error('Error checking medication availability:', error);
+    .catch((error) => {
+      console.error("Error checking medication availability:", error);
       res.json({
         status: 500,
-        medicationAvailability: null
-      })
+        medicationAvailability: null,
+      });
     });
+};
 
-}
-
-const confirmMedBill=(req,res)=>{
-const newBill=new medbills({
-  pid: req.body.pid,
-  userid: req.body.userid,
-  date: new Date(),
-  medications: req.body.medications,
-  price: req.body.price
-})
-newBill.save()
-.then(data => {
-  return res.json({
-    status: 200,
-    msg: "Inserted successfully",
-    data: data
-  })
-}).catch(err => {
-
-
-  return res.json({
-    status: 500,
-    msg: "Data not Inserted",
-    Error: err
-  })
-})
-}
-const viewmedBillbyPid=(req,res)=>{
-    medbills.findOne({ pid:req.params.id })
-      .populate('userid').exec()
-      .then(data => {
-        if (data.length > 0) {
-          res.json({
-            status: 200,
-            msg: "Data obtained successfully",
-            data: data
-          })
-        } else {
-          res.json({
-            status: 200,
-            msg: "No Data obtained "
-          })
-        }
-      }).catch(err => {
+const confirmMedBill = (req, res) => {
+  const newBill = new medbills({
+    pid: req.body.pid,
+    userid: req.body.userid,
+    date: new Date(),
+    medications: req.body.medications,
+    price: req.body.price,
+  });
+  newBill
+    .save()
+    .then((data) => {
+      return res.json({
+        status: 200,
+        msg: "Inserted successfully",
+        data: data,
+      });
+    })
+    .catch((err) => {
+      return res.json({
+        status: 500,
+        msg: "Data not Inserted",
+        Error: err,
+      });
+    });
+};
+const viewmedBillbyPid = (req, res) => {
+  medbills
+    .findOne({ pid: req.params.id })
+    .populate("userid")
+    .exec()
+    .then((data) => {
+      if (data.length > 0) {
         res.json({
-          status: 500,
-          msg: "Data not Inserted",
-          Error: err
-        })
-      })
-  
-  }
-
+          status: 200,
+          msg: "Data obtained successfully",
+          data: data,
+        });
+      } else {
+        res.json({
+          status: 200,
+          msg: "No Data obtained ",
+        });
+      }
+    })
+    .catch((err) => {
+      res.json({
+        status: 500,
+        msg: "Data not Inserted",
+        Error: err,
+      });
+    });
+};
 
 module.exports = {
   addMedicine,
@@ -325,7 +325,7 @@ module.exports = {
   upload,
   viewPrescriptionReqs,
   checkMedicine,
-sharePrescriptionTionToPharmacy,
-confirmMedBill,
-viewmedBillbyPid
-}
+  sharePrescriptionTionToPharmacy,
+  confirmMedBill,
+  viewmedBillbyPid,
+};
