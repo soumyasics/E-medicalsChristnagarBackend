@@ -220,14 +220,7 @@ const checkMedicine = (req, res) => {
 
 const sharePrescriptionTionToPharmacy =async (req, res) => {
 let prescription=""
-  // await prescriptionSchema.findByIdAndUpdate({ _id: req.params.id },
-  //    { pharmacyNeeded: true })
-  //   .exec()
-  //   .then(data => {
-  //    console.log("updated");
-  //   }).catch(err => {
-  //     console.log(err);
-  //   })
+ 
 
     await  prescriptionSchema.findById({ _id: req.params.id })
      .exec()
@@ -267,7 +260,15 @@ price+=x.price
 
 }
 
-const confirmMedBill=(req,res)=>{
+const confirmMedBill=async(req,res)=>{
+   await prescriptionSchema.findByIdAndUpdate({ _id: req.params.id },
+     { pharmacyNeeded: true })
+    .exec()
+    .then(data => {
+     console.log("updated");
+    }).catch(err => {
+      console.log(err);
+    })
 const newBill=new medbills({
   pid: req.body.pid,
   userid: req.body.userid,
@@ -275,7 +276,7 @@ const newBill=new medbills({
   medications: req.body.medications,
   price: req.body.price
 })
-newBill.save()
+await newBill.save()
 .then(data => {
   return res.json({
     status: 200,
