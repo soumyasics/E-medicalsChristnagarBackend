@@ -320,6 +320,7 @@ const viewmedBillbyPid=(req,res)=>{
 
   const viewmedBillforPharmacy=(req,res)=>{
     medbills.find({})
+      .populate('pid')
       .populate('userid').exec()
       .then(data => {
         if (data.length > 0) {
