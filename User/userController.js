@@ -1,6 +1,8 @@
 const appointmentSchema = require("../DoctorAppointments/appointmentSchema");
 const prescriptionSchema = require("../Doctors/Prescriptions/prescriptionSchema");
 const resultSchema = require("../Lab/Results/resultSchema");
+const medicineBill = require("../Pharmacy/medicineBill");
+const bookingSchema=require('../Lab/Booking/bookingSchema')
 const users = require("./userSchema");
 const multer = require("multer");
 
@@ -177,7 +179,32 @@ const viewUserById = (req, res) => {
     });
 };
 
-const deleteUserById = (req, res) => {
+const deleteUserById = async(req, res) => {
+  let flag=0
+medicineBill.find({userid:req.params.id}).exec().then(data=>{
+console.log(data);
+if(data.length>0)
+flag=1
+}).catch(err=>{
+  console.log(err);
+})
+
+appointmentSchema.find({userid:req.params.id}).exec().then(data=>{
+  console.log(data);
+  if(data.length>0)
+  flag=1
+  }).catch(err=>{
+    console.log(err);
+  })
+  bookingSchema.find({userid:req.params.id}).exec().then(data=>{
+    console.log(data);
+    if(data.length>0)
+    flag=1
+    }).catch(err=>{
+      console.log(err);
+    })
+
+    if(flag==0){
   users
     .findByIdAndDelete({ _id: req.params.id })
     .exec()
@@ -197,6 +224,13 @@ const deleteUserById = (req, res) => {
         Error: err,
       });
     });
+  }else{
+    res.json({
+      status: 500,
+      msg: "User Cannot be deleted",
+      Error: err,
+    });
+  }
 };
 //forgotvPawd User by id
 const forgotPwd = (req, res) => {
