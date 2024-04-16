@@ -10,7 +10,7 @@ app.use(express.static(`${__dirname}/upload`));
 
 app.use(cors())
 const route=require('./routes')
-app.use('/emedicals',route)
+app.use('/emedicals_api',route)
 
 app.listen(4005,()=>{
     console.log("Server created successfully at 4005");
