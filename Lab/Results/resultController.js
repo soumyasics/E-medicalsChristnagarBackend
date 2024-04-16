@@ -161,9 +161,28 @@ const viewResultByUserId = async (req, res) => {
 }
 
 
+const reviewResultByDr = async (req, res) => {
+    results.findByIdAndUpdate({ _id: req.params.id },
+    {drReviwed:true}).exec().then(data => {
+        res.json({
+            status: 200,
+            data: data
+        })
+    }).catch(err => {
+        res.json({
+            status: 500,
+            err: err
+        })
+    })
+
+
+}
+
+
 module.exports = {
     addResult,
     viewResultByBookingId,
     viewResultByUserId,
-    viewResultById
+    viewResultById,
+    reviewResultByDr
 }

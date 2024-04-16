@@ -42,6 +42,10 @@ const Schema=mongoose.Schema({
         type:String,
         default:"Everything is Normal,Have A Nice Day"
     },
+    drReviwed:{
+        type:Boolean,
+        default:false
+    },
     date:Date
 });
 module.exports=mongoose.model('results',Schema)

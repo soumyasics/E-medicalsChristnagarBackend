@@ -43,6 +43,10 @@ const hSchema=mongoose.Schema({
         required:true,
        
         dropDups: true
+    },
+    isactive:{
+        type:Boolean,
+        default:false
     }
 });
 module.exports=mongoose.model('hospitals',hSchema)

@@ -84,10 +84,10 @@ const loginHospital=(req,res)=>{
   //Login Hospital --finished
   
   
-  //View all Hospitals
+  //View all  Approved Hospitals
   
-  const viewHospitals=(req,res)=>{
-    Hospitals.find().exec()
+  const viewApprovedHospitals=(req,res)=>{
+    Hospitals.find({isactive:true}).exec()
     .then(data=>{
       if(data.length>0){
       res.json({
@@ -112,6 +112,35 @@ const loginHospital=(req,res)=>{
   }
   
   // view Hospitals finished
+  
+
+  
+  //View all   Hospital Reqs for approval
+  
+  const viewHospitalReqs=(req,res)=>{
+    Hospitals.find({isactive:false}).exec()
+    .then(data=>{
+      if(data.length>0){
+      res.json({
+          status:200,
+          msg:"Data obtained successfully",
+          data:data
+      })
+    }else{
+      res.json({
+        status:200,
+        msg:"No Data obtained "
+    })
+    }
+  }).catch(err=>{
+      res.json({
+          status:500,
+          msg:"Data not Inserted",
+          Error:err
+      })
+  })
+  
+  }
   
   
   //update Hospital by id
@@ -217,11 +246,34 @@ const loginHospital=(req,res)=>{
   }
   
 
+  //Approve Hospital by id
+  const approveHospitalById=(req,res)=>{
+  
+    
+      
+    Hospitals.findByIdAndUpdate({_id:req.params.id},{
+       isactive:true
+      })
+  .exec().then(data=>{
+    res.json({
+        status:200,
+        msg:"Updated successfully"
+    })
+  }).catch(err=>{
+    res.json({
+        status:500,
+        msg:"Data not Updated",
+        Error:err
+    })
+  })
+  }
 
 
 module.exports={
   registerHospital,
-  viewHospitals,
+  viewApprovedHospitals,
+  viewHospitalReqs,
+  approveHospitalById,
   editHospitalById,
   loginHospital,
   forgotPwd,

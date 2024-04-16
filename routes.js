@@ -28,7 +28,10 @@ router.post('/viewMedicalhistory/:id',userController.viewMedicalhistory)//done
 router.post('/registerHospital',HospitalController.upload,HospitalController.registerHospital)//done
 router.post('/loginHospital',HospitalController.loginHospital)//done
 router.post('/viewHospitalById/:id',HospitalController.viewHospitalById)//done
-router.post('/viewHospitals',HospitalController.viewHospitals)
+router.post('/viewHospitalReqs',HospitalController.viewHospitalReqs) //new api
+router.post('/viewApprovedHospitals',HospitalController.viewApprovedHospitals)//new api
+router.post('/approveHospitalById/:id',HospitalController.approveHospitalById)//new api
+
 router.post('/editHospitalById/:id',HospitalController.upload,HospitalController.editHospitalById)//done
 router.post('/deleteHospitalById/:id',HospitalController.deleteHospitalById)
 router.post('/forgotPwdHospital',HospitalController.forgotPwd)//done
@@ -75,6 +78,8 @@ router.post('/addResult',result.addResult)//done
 router.post('/viewResultByBookingId/:id',result.viewResultByBookingId)//done
 router.post('/viewResultById/:id',result.viewResultById)//done
 router.post('/viewResultByUserId/:id',result.viewResultByUserId)//done
+router.post('/viewResultByUserId/:id',result.viewResultByUserId)//done
+router.post('/reviewResultByDr/:id',result.reviewResultByDr)//new API
 
 //Pharmacy
 router.post('/addMedicine',medicines.upload,medicines.addMedicine)//done
