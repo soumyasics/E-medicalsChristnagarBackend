@@ -1,6 +1,6 @@
 const doctors=require('./doctorSchema')
 const multer=require('multer')
-
+let aapointment=require('../DoctorAppointments/appointmentSchema')
 
 const storage = multer.diskStorage({
   destination: function (req, res, cb) {
@@ -215,9 +215,19 @@ const loginDoctor=(req,res)=>{
   
   }
   
-  const deleteDoctorById=(req,res)=>{
-
-    doctors.findByIdAndDelete({_id:req.params.id}).exec()
+  const deleteDoctorById=async (req,res)=>{
+let flag=0;
+await aapointment.find({doctorid:req.params.id}).exec()
+.then(datas=>{
+ if(datas.length>0){
+  flag=1
+ }
+})
+.catch(err=>{
+  console.log(err);
+})
+if(flag==0){
+    await doctors.findByIdAndDelete({_id:req.params.id}).exec()
     .then(data=>{
       console.log(data);
       res.json({
@@ -234,6 +244,12 @@ const loginDoctor=(req,res)=>{
           Error:err
       })
   })
+}else{
+  res.json({
+    status:405,
+    msg:"Doctor  Can't be deleted, As he has some Appointments !!",
+})
+}
   
   }
   //forgotvPawd  by id

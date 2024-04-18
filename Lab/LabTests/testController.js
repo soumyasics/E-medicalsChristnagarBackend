@@ -1,7 +1,7 @@
 
 
 const tests=require('./testSchema')
-
+const appointments=require('../Booking/bookingSchema')
 
 //add test
 const addTest=async(req,res)=>{
@@ -121,8 +121,23 @@ const viewTestById=(req,res)=>{
 
 //Delete  Lab by ID
 
-const deleteTestById=(req,res)=>{
-  tests.findByIdAndDelete({_id:req.params.id}).exec()
+const deleteTestById=async (req,res)=>{
+
+
+  let flag=0;
+  await appointments.find({testid:req.params.id}).exec()
+  .then(datas=>{
+   if(datas.length>0){
+    flag=1
+   }
+  })
+  .catch(err=>{
+    console.log(err);
+  })
+  if(flag==0){
+
+
+  await tests.findByIdAndDelete({_id:req.params.id}).exec()
   .then(data=>{
 
     console.log(data);
@@ -140,6 +155,12 @@ const deleteTestById=(req,res)=>{
         Error:err
     })
 })
+}else{
+  res.json({
+    status:405,
+    msg:"Test  Can't be deleted, As We have some Bookings for it !!",
+})
+}
 }
 
 

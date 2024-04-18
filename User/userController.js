@@ -181,7 +181,7 @@ const viewUserById = (req, res) => {
 
 const deleteUserById = async(req, res) => {
   let flag=0
-medicineBill.find({userid:req.params.id}).exec().then(data=>{
+await medicineBill.find({userid:req.params.id}).exec().then(data=>{
 console.log(data);
 if(data.length>0)
 flag=1
@@ -189,14 +189,14 @@ flag=1
   console.log(err);
 })
 
-appointmentSchema.find({userid:req.params.id}).exec().then(data=>{
+await appointmentSchema.find({userid:req.params.id}).exec().then(data=>{
   console.log(data);
   if(data.length>0)
   flag=1
   }).catch(err=>{
     console.log(err);
   })
-  bookingSchema.find({userid:req.params.id}).exec().then(data=>{
+  await bookingSchema.find({userid:req.params.id}).exec().then(data=>{
     console.log(data);
     if(data.length>0)
     flag=1
@@ -205,7 +205,7 @@ appointmentSchema.find({userid:req.params.id}).exec().then(data=>{
     })
 
     if(flag==0){
-  users
+      await  users
     .findByIdAndDelete({ _id: req.params.id })
     .exec()
     .then((data) => {
@@ -226,7 +226,7 @@ appointmentSchema.find({userid:req.params.id}).exec().then(data=>{
     });
   }else{
     res.json({
-      status: 500,
+      status: 405,
       msg: "User Cannot be deleted",
       Error: err,
     });
